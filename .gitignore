@@ -1,0 +1,21 @@
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local logs and temp files
+*.log
+*.tmp
+*.cache
+*.bak
+
+# Common Windows archive artifacts
+*.cab
+*.msi
+*.zip
