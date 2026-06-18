@@ -47,19 +47,6 @@ export default function Header() {
                 </svg>
               </div>
             </button>
-            <a
-              href="work-with-us"
-              className="btn-component btn-primary sm-hidden btn-animate-swap relative overflow-hidden ff_inter"
-            >
-              <span className="flex work-us" style={{ gap: '12px' }}>
-                <span className="btn-text">Work with us</span>
-                <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                  <path d="M15.0833 5.41667L5.5 15" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M7.16663 5H15.5V13.3333" stroke="#0D0D0D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <span className="lets-talk absolute">Lets Talk</span>
-            </a>
             <button
               className="toggle-header hidden lg_block"
               id="toggleHeader"
