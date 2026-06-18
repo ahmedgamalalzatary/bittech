@@ -1,14 +1,20 @@
-import { useEffect } from 'react'
+import emailjs from '@emailjs/browser'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
 
 export default function Home() {
   const { t } = useTranslation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
   const contactPoints = t('common.contact.points', { returnObjects: true })
   const services = t('home.services.items', { returnObjects: true })
   const showcaseProjects = t('home.showcase.projects', { returnObjects: true })
   const processSteps = t('home.process.steps', { returnObjects: true })
   const faqs = t('home.faq.items', { returnObjects: true })
+  const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+  const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+  const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
   // Replicates the inline interactivity from index2.html (cursor trail + bubbles,
   // FAQ accordion, process-scroll image swap) and its country-dropdown script.
@@ -119,6 +125,31 @@ export default function Home() {
     return () => cleanups.forEach((fn) => fn())
   }, [])
 
+  const handleContactSubmit = async (event) => {
+    event.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus({ type: '', message: '' })
+
+    try {
+      await emailjs.sendForm(emailJsServiceId, emailJsTemplateId, event.currentTarget, {
+        publicKey: emailJsPublicKey,
+      })
+
+      event.currentTarget.reset()
+      setSubmitStatus({
+        type: 'success',
+        message: 'Your inquiry has been sent successfully.',
+      })
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send your inquiry. Please try again.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <>
       <section className="hero-section">
@@ -210,7 +241,7 @@ export default function Home() {
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                    <img width="100" height="100" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -222,7 +253,7 @@ export default function Home() {
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                    <img width="100" height="100" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -238,7 +269,7 @@ export default function Home() {
                       height="32" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                    <img width="100" height="100" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -254,7 +285,7 @@ export default function Home() {
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                    <img width="100" height="100" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -266,7 +297,7 @@ export default function Home() {
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                    <img width="100" height="100" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                 </div>
@@ -534,7 +565,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="grow form-wraper">
-              <form id="contactForm" data-action="https://BitTech.com/contact-submit" className="flex flex-col"
+              <form id="contactForm" onSubmit={handleContactSubmit} className="flex flex-col"
                 style={{ gap: '28px' }}>
                 <div>
                   <input
@@ -559,9 +590,18 @@ export default function Home() {
                 </div>
                 <button type="submit"
                   className="btn-component btn-outlined-primary ff_inter relative behind-cursor"
-                  style={{ marginTop: '4px' }}>
-                  {t('common.form.submit')}
+                  style={{ marginTop: '4px' }}
+                  disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : t('common.form.submit')}
                 </button>
+                {submitStatus.message ? (
+                  <p
+                    className="fs_14 lh_normal ff_inter"
+                    style={{ color: submitStatus.type === 'success' ? '#8ED08E' : '#FF8A8A' }}
+                  >
+                    {submitStatus.message}
+                  </p>
+                ) : null}
               </form>
               <div style={{ marginTop: '32px' }}>
                 <p className="fs_14 lh_normal ff_inter text_gray_350">
@@ -587,7 +627,7 @@ export default function Home() {
       </section>
 
       <div className="floating_btn flex flex-col items-center justify-center">
-        <a target="_blank" rel="noreferrer" href="https://wa.me/+923203244280" aria-label={t('home.whatsAppLabel')}>
+        <a target="_blank" rel="noreferrer" href="https://wa.me/201011125116?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85" aria-label={t('home.whatsAppLabel')}>
           <div className="contact_icon flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
               <g clipPath="url(#clip0_1_4014)">
