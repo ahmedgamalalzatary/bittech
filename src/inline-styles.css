@@ -669,7 +669,7 @@
         .hero-section {
             padding-top: 48px;
             padding-bottom: 80px;
-            background-image: url("frontend-assets/images/home-hero-bg.webp");
+            background-image: url("/frontend-assets/images/home-hero-bg.webp");
             will-change: transform;
             contain: layout paint;
             background-position: center center;

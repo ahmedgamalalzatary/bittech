@@ -1,0 +1,36 @@
+.main-heading {
+    font-size: 72px;
+    line-height: 96px
+}
+
+.hero-text {
+    margin-top: 12px;
+    margin-bottom: 32px;
+}
+
+.hero-star {
+    top: 46%;
+    left: -55px;
+}
+
+@media(max-width: 575px) {
+    .sm_py_48 {
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .main-heading {
+        font-size: 36px;
+        line-height: 50px
+    }
+
+    .hero-text {
+        margin-top: 16px;
+        margin-bottom: 24px;
+    }
+
+    .hero-star {
+        top: 18%;
+        left: 0;
+    }
+}
