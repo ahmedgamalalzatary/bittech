@@ -48,7 +48,7 @@
         #countryDropdown li:hover {
             background-color: var(--color-black-170);
         }
-    
+
 
         @font-face {
             font-family: Geologica;
@@ -1758,18 +1758,18 @@
             flex-basis: 200px;
         }
 
-        .zeeframes-strive {
+        .BitTech-strive {
             margin-top: 24px;
             font-size: 32px;
             line-height: 46px;
         }
 
-        .zeeframes-strive span {
+        .BitTech-strive span {
             color: var(--color-gray-470);
             transition: color 0.3s ease;
         }
 
-        .zeeframes-strive span.active {
+        .BitTech-strive span.active {
             color: var(--color-white);
         }
 
@@ -2099,7 +2099,7 @@
                 gap: 16px;
             }
 
-            .zeeframes-strive {
+            .BitTech-strive {
                 margin-top: 16px;
             }
 
@@ -2118,7 +2118,7 @@
                 margin-right: auto;
             }
 
-            .zeeframes-strive {
+            .BitTech-strive {
                 font-size: 28px;
                 line-height: 42px;
             }
@@ -2165,4 +2165,3 @@
                 font-size: 48px;
             }
         }
-    

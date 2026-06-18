@@ -30,7 +30,7 @@ export default function Work() {
               {t('work.heroText')}
             </p>
             <a
-              href="https://calendly.com/contact-zeeframes/30min?month=2025-11"
+              href="https://calendly.com/contact-BitTech/30min?month=2025-11"
               target="_blank"
               className="btn-component btn-outlined ff_inter mx-auto btn-animate-swap overflow-hidden relative w-fit"
             >
@@ -262,7 +262,7 @@ export default function Work() {
             <div className="grow form-wraper">
               <form
                 id="contactForm"
-                data-action="https://zeeframes.com/contact-submit"
+                data-action="https://BitTech.com/contact-submit"
                 className="flex flex-col"
                 style={{ gap: '28px' }}
               >
@@ -584,10 +584,10 @@ export default function Work() {
                   style={{ marginTop: '12px', columnGap: '16px', rowGap: '12px' }}
                 >
                   <a
-                    href="mailto:businessmanager@zeeframes.com"
+                    href="mailto:businessmanager@BitTech.com"
                     className="flex items-center"
                     style={{ gap: '6px' }}
-                    aria-label="mail us on businessmanager@zeeframes.com"
+                    aria-label="mail us on businessmanager@BitTech.com"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path
@@ -597,7 +597,7 @@ export default function Work() {
                         fill="#BDBDBD"
                       />
                     </svg>
-                    <span className="fs_14 lh_21 ff_inter text_gray_495">contact@zeeframes.com</span>
+                    <span className="fs_14 lh_21 ff_inter text_gray_495">contact@BitTech.com</span>
                   </a>
                 </div>
               </div>

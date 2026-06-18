@@ -22,8 +22,8 @@ export default function Header() {
     <header className="header z_999">
       <div className="container">
         <nav className="flex items-center justify-between">
-          <NavLink to="/" aria-label="Zeeframes">
-            <img src="/frontend-assets/logo.png" alt="Zeeframes" width="179" height="36" />
+          <NavLink to="/" aria-label="BitTech">
+            <img src="/frontend-assets/logo.png" alt="BitTech" width="179" height="36" />
           </NavLink>
           <ul
             className={'list-unstyled flex items-center gap-12 mobile-menu' + (menuShown ? ' shown' : '')}

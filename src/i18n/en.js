@@ -34,7 +34,7 @@ const en = {
     company: 'Company',
     services: 'Services',
     industries: 'Industries',
-    copyright: '© ZeeFrames (Private) Limited. All Rights Reserved.',
+    copyright: '© BitTech (Private) Limited. All Rights Reserved.',
     servicesList: [
       'UI UX Consultation',
       'UI UX Design',
@@ -110,7 +110,7 @@ const en = {
       eyebrow: 'About',
       title: 'Who We Are as a Design Partner',
       description:
-        'ZeeFrames is a specialized UI UX design agency focused on creating exceptional digital experiences. We are committed to delivering the best user experience possible for your business.',
+        'BitTech is a specialized UI UX design agency focused on creating exceptional digital experiences. We are committed to delivering the best user experience possible for your business.',
       cards: [
         {
           icon: '/frontend-assets/images/svgs/team.svg',
@@ -124,7 +124,7 @@ const en = {
           alt: 'client-centric',
           title: 'Client-Centric Design',
           description:
-            'At ZeeFrames, our unique design approach focuses on understanding client needs and collaborating to create exceptional, goal-driven digital products.',
+            'At BitTech, our unique design approach focuses on understanding client needs and collaborating to create exceptional, goal-driven digital products.',
         },
         {
           icon: '/frontend-assets/images/svgs/testimonial.svg',
@@ -138,7 +138,7 @@ const en = {
     mission: {
       eyebrow: 'Our Mission',
       text:
-        'ZeeFrames strives to be a leading UI UX design agency known for innovative solutions that deliver exceptional user experiences and drive business growth. We blend creativity and user-centered design to craft intuitive, standout products and partner with clients to achieve lasting impact.',
+        'BitTech strives to be a leading UI UX design agency known for innovative solutions that deliver exceptional user experiences and drive business growth. We blend creativity and user-centered design to craft intuitive, standout products and partner with clients to achieve lasting impact.',
       caption: 'Since 2020, what we get...',
       metrics: [
         {
@@ -306,14 +306,14 @@ const en = {
     },
     gradient: {
       title: 'Design That Thinks. Interfaces That Feel.',
-      description: 'At ZeeFrames, we craft AI-ready design systems for modern software responsive, scalable, and human-centered.',
+      description: 'At BitTech, we craft AI-ready design systems for modern software responsive, scalable, and human-centered.',
       primary: 'See AI in Action',
       secondary: 'Lets Talk',
     },
     faq: {
       eyebrow: 'FAQs',
       title: 'Questions? We’ve Got Answers',
-      description: 'ZeeFrames reduces design complexity & speeds up product launches with clear UX workflows, scalable visual systems, and no-code execution.',
+      description: 'BitTech reduces design complexity & speeds up product launches with clear UX workflows, scalable visual systems, and no-code execution.',
       primary: 'Book a free call',
       secondary: 'Lets Talk',
       items: [
@@ -336,16 +336,16 @@ const en = {
           ],
         },
         {
-          question: 'How does ZeeFrames UI UX Design differ from other design solutions?',
+          question: 'How does BitTech UI UX Design differ from other design solutions?',
           answers: [
-            'At ZeeFrames, we believe in the power of Human-Computer Interaction and leverage it to make informed, data-driven design decisions that set us apart from the competition. As a leading UI UX design studio in Pakistan, we follow a design strategy that begins with discovering the needs and pain points of users and ends with real user testing for direct feedback. This approach enables us to create user-centric designs that enhance usability, accessibility, and overall user satisfaction.',
+            'At BitTech, we believe in the power of Human-Computer Interaction and leverage it to make informed, data-driven design decisions that set us apart from the competition. As a leading UI UX design studio in Pakistan, we follow a design strategy that begins with discovering the needs and pain points of users and ends with real user testing for direct feedback. This approach enables us to create user-centric designs that enhance usability, accessibility, and overall user satisfaction.',
             "Our design philosophy is simple: put users at the center of everything we do. Whether it's UX research or designing User Flows, Wireframing or Prototyping our team of expert UI UX designers ensure that your users are considered in every phase of designing to deliver outstanding results that meet the unique needs of your business.",
           ],
         },
         {
-          question: 'Are there any customer reviews or case studies available for ZeeFrames UI UX Design?',
+          question: 'Are there any customer reviews or case studies available for BitTech UI UX Design?',
           answers: [
-            "At ZeeFrames, we take pride in our customer reviews and case studies that showcase our expertise in the UI UX design industry. You can easily access them on our website to get a glimpse of our work and the impact it has had on our clients' businesses. As a top-class UI UX design firm, we have worked with a diverse range of clients worldwide, helping them create engaging and intuitive digital experiences for their customers. With our expertise and user-centered design approach, you can be rest assured as we will take your website design to the next level.",
+            "At BitTech, we take pride in our customer reviews and case studies that showcase our expertise in the UI UX design industry. You can easily access them on our website to get a glimpse of our work and the impact it has had on our clients' businesses. As a top-class UI UX design firm, we have worked with a diverse range of clients worldwide, helping them create engaging and intuitive digital experiences for their customers. With our expertise and user-centered design approach, you can be rest assured as we will take your website design to the next level.",
           ],
         },
       ],

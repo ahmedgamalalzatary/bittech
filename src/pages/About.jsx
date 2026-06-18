@@ -34,7 +34,7 @@ export default function About() {
               {t('about.hero.description')}
             </p>
             <a
-              href="https://calendly.com/contact-zeeframes/30min?month=2025-11"
+              href="https://calendly.com/contact-BitTech/30min?month=2025-11"
               target="_blank"
               className="btn-component btn-outlined relative overflow-hidden mx-auto w-fit btn-animate-swap"
             >
@@ -176,7 +176,7 @@ export default function About() {
         <div className="container">
           <div style={{ maxWidth: '981px' }}>
             <p className="fs_14 text_primary uppercase">{t('about.mission.eyebrow')}</p>
-            <p className="zeeframes-strive fs_32 lh_46 fw_300" id="animatedText">
+            <p className="BitTech-strive fs_32 lh_46 fw_300" id="animatedText">
               {t('about.mission.text')}
             </p>
           </div>
@@ -240,7 +240,7 @@ export default function About() {
         <div className="container">
           <div style={{ maxWidth: '981px' }}>
             <p className="fs_14 text_primary uppercase">{t('about.values.eyebrow')}</p>
-            <p className="zeeframes-strive fs_32 lh_46 fw_300" id="animatedText2">
+            <p className="BitTech-strive fs_32 lh_46 fw_300" id="animatedText2">
               {t('about.values.text')}
             </p>
           </div>
