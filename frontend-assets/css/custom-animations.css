@@ -332,7 +332,7 @@
 }
 
 .btn-outlined-primary:hover {
-    background: linear-gradient(90deg, #F3FE00 0%, #33DE1D 100%);
+    background: linear-gradient(90deg, #FFD700 0%, #E6B400 100%);
     border-color: var(--color-black-750);
 }
 

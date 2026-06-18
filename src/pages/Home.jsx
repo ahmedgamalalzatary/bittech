@@ -198,69 +198,55 @@ export default function Home() {
               <div className="slider m-auto relative w-full grid items-center">
                 <div className="slide-track flex">
                   <div className="slide flex items-center">
-                    <img width="138" height="32" src="/frontend-assets/images/svgs/trafilea.svg"
+                    <img width="200" height="140" src="/frontend-assets/biscofa.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="152" height="32" src="/frontend-assets/images/svgs/yallaMotor.svg"
-                      alt="yallaMotor" decoding="async" />
-                  </div>
-                  <div className="slide flex items-center">
-                    <img width="198" height="32" src="/frontend-assets/images/svgs/repurpose.svg"
+                    <img width="198" height="32" src="/frontend-assets/capella.png"
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="56" height="40" src="/frontend-assets/images/svgs/adiqat.svg"
+                    <img width="80" height="80" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="198" height="32" src="/frontend-assets/images/svgs/repurpose.svg"
+                    <img width="198" height="32" src="/frontend-assets/capella.png"
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="56" height="40" src="/frontend-assets/images/svgs/adiqat.svg"
+                    <img width="80" height="80" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="138" height="32" src="/frontend-assets/images/svgs/trafilea.svg"
+                    <img width="200" height="140" src="/frontend-assets/biscofa.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img src="/frontend-assets/images/svgs/yallaMotor.svg" alt="yallaMotor" width="152"
-                      height="32" decoding="async" />
-                  </div>
-
-                  <div className="slide flex items-center">
-                    <img src="/frontend-assets/images/svgs/repurpose.svg" alt="repurpose" width="198"
+                    <img src="/frontend-assets/capella.png" alt="repurpose" width="198"
                       height="32" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img src="/frontend-assets/images/svgs/adiqat.svg" alt="adiqat" width="56"
-                      height="40" decoding="async" />
+                    <img width="80" height="80" src="/frontend-assets/capella2.png"
+                      alt="adiqat"  decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="138" height="32" src="/frontend-assets/images/svgs/trafilea.svg"
+                    <img width="200" height="140" src="/frontend-assets/biscofa.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="152" height="32" src="/frontend-assets/images/svgs/yallaMotor.svg"
-                      alt="yallaMotor" decoding="async" />
-                  </div>
-
-                  <div className="slide flex items-center">
-                    <img width="198" height="32" src="/frontend-assets/images/svgs/repurpose.svg"
+                    <img width="198" height="32" src="/frontend-assets/capella.png"
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="56" height="40" src="/frontend-assets/images/svgs/adiqat.svg"
+                    <img width="80" height="80" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="198" height="32" src="/frontend-assets/images/svgs/repurpose.svg"
+                    <img width="198" height="32" src="/frontend-assets/capella.png"
                       alt="repurpose" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="56" height="40" src="/frontend-assets/images/svgs/adiqat.svg"
+                    <img width="80" height="80" src="/frontend-assets/capella2.png"
                       alt="adiqat" decoding="async" />
                   </div>
                 </div>
@@ -370,17 +356,17 @@ export default function Home() {
 
       <section className="py_80 sm_py_32">
         <div className="container">
-            <div className="text-center mx-auto" style={{ maxWidth: '596px' }}>
-              <p className="fs_14 text_primary uppercase">
-                {t('home.process.eyebrow')}
-              </p>
-              <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
-                {t('home.process.title')}
-              </h2>
-              <p className="fs_14 lh_21 ff_inter text_gray_495">
-                {t('home.process.description')}
-              </p>
-            </div>
+          <div className="text-center mx-auto" style={{ maxWidth: '596px' }}>
+            <p className="fs_14 text_primary uppercase">
+              {t('home.process.eyebrow')}
+            </p>
+            <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
+              {t('home.process.title')}
+            </h2>
+            <p className="fs_14 lh_21 ff_inter text_gray_495">
+              {t('home.process.description')}
+            </p>
+          </div>
 
           <div className="mt_64 sm_mt_32">
             <div className="flex justify-between gap-80 relative">

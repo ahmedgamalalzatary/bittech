@@ -66,8 +66,8 @@
          */
 
         :root {
-            --color-primary: #F3FE00;
-            --color-primary-2: #E2EC07;
+            --color-primary: #FFD700;
+            --color-primary-2: #E6B400;
             --color-danger: rgb(220, 38, 38);
             --color-white: #FFFFFF;
             --color-white-60: rgba(255, 255, 255, 0.60);
@@ -82,7 +82,7 @@
             --color-white-03: rgba(255, 255, 255, 0.03);
             --color-white-00: rgba(255, 255, 255, 0.00);
             --color-black-72: rgba(60, 60, 60, 0.72);
-            --color-black-08: rgba(243, 254, 0, 0.08);
+            --color-black-08: rgba(255, 215, 0, 0.08);
             --bg-gradient-gray: linear-gradient(270deg, rgba(255, 255, 255, 0.20) 86.27%, rgba(255, 255, 255, 0.00) 88.15%);
             --color-dark-gray: #343434;
             --color-gray-50: #E7E7E7;
@@ -401,7 +401,7 @@
         }
 
         :root {
-            --color-primary: #f3fe00;
+            --color-primary: #FFD700;
             --color-danger: rgb(220, 38, 38);
             --color-white: #ffffff;
             --color-white-60: rgba(255, 255, 255, 0.6);
