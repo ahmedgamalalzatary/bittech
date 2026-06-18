@@ -597,7 +597,7 @@ export default function Work() {
                         fill="#BDBDBD"
                       />
                     </svg>
-                    <span className="fs_14 lh_21 ff_inter text_gray_495">contact@BitTech.com</span>
+                    <span className="fs_14 lh_21 ff_inter text_gray_495">info@bittech.site</span>
                   </a>
                 </div>
               </div>

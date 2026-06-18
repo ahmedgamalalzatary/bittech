@@ -450,6 +450,16 @@
     }
 }
 
+@keyframes scroll-rtl {
+    0% {
+        transform: translate(0)
+    }
+
+    100% {
+        transform: translateX(1150px)
+    }
+}
+
 .floating-btn {
     position: absolute;
     top: 0;

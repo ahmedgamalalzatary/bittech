@@ -408,6 +408,10 @@ button {
     animation: 10s linear 0s infinite normal none running scroll
 }
 
+[dir="rtl"] .main-animate .slide-track {
+    animation-name: scroll-rtl
+}
+
 .main-animate .slide {
     height: 32px
 }

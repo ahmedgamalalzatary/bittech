@@ -4,7 +4,7 @@ import ar from './ar'
 import en from './en'
 
 const STORAGE_KEY = 'bittech-language'
-const FALLBACK_LANGUAGE = 'ar'
+const FALLBACK_LANGUAGE = 'en'
 
 const savedLanguage = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null
 const initialLanguage = savedLanguage || FALLBACK_LANGUAGE
