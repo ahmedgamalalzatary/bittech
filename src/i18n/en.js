@@ -18,40 +18,40 @@ const en = {
     },
     contact: {
       eyebrow: 'Contact us',
-      title: "Let's Build Something You'll Be Proud Of",
+      title: "Let's Build Software That Moves Your Business Forward",
       description:
-        'Have a project in mind? Whether you need a full UI/UX redesign, a new digital product, or a stronger online presence, our team is ready to help turn your ideas into reality.',
+        'Have a project in mind? Whether you need a business website, e-commerce store, mobile app, desktop application, CRM, ERP, or a custom software solution, our team is ready to turn your requirements into a reliable product.',
       points: [
         "You'll hear from us within one business day.",
-        "We'll understand your goals and gather the right project details.",
-        "You'll receive a clear proposal with timeline, scope, and pricing.",
+        "We'll understand your business goals and technical requirements.",
+        "You'll receive a clear proposal with scope, timeline, and pricing.",
       ],
     },
   },
   footer: {
     intro:
-      'We transform ideas into user-centered digital experiences for businesses worldwide, from Fortune 500s to startups, using Figma, Webflow, and no-code solutions.',
+      'We build professional software solutions for businesses worldwide, from websites and online stores to mobile apps, desktop apps, CRM platforms, ERP systems, and custom digital products.',
     company: 'Company',
     services: 'Services',
     industries: 'Industries',
     copyright: '© BitTech (Private) Limited. All Rights Reserved.',
     servicesList: [
-      'UI UX Consultation',
-      'UI UX Design',
-      'Web Design',
-      'MVP Design',
-      'Product Revamp',
-      'Brand Design',
-      'NoCode Development',
-      'Webflow Development',
-      'Framer Development',
-      'Figma Design',
+      'Custom Software Development',
+      'Website Development',
+      'E-commerce Development',
+      'Mobile App Development',
+      'Desktop App Development',
+      'CRM Development',
+      'ERP Development',
+      'System Integration',
+      'Product Modernization',
+      'Technical Consulting',
     ],
     industriesList: ['AI/ML', 'SaaS', 'Web3', 'Travel', 'Fintech', 'EdTech', 'Logistics', 'Real Estate', 'Healthcare', 'E-commerce'],
   },
   work: {
-    heroTitle: 'Our UI UX & Branding Case Studies',
-    heroText: 'No matter the industry you’re in, or the asset you need, we can design it for you',
+    heroTitle: 'Our Software Project Case Studies',
+    heroText: 'From business platforms to customer-facing products, we build software tailored to real business needs.',
     heroPrimary: 'Schedule call',
     heroSecondary: 'Book a Demo',
     filterTitle: 'Choose your industry',
@@ -71,9 +71,9 @@ const en = {
   },
   about: {
     hero: {
-      title: 'A Strategic UI UX Design Agency',
+      title: 'A Strategic Software Development Company',
       description:
-        'We are the best product design agency for startups. We excel in UI UX design, branding, web development, and are committed to 100% satisfaction with every project.',
+        'BitTech is a software company that helps businesses build reliable digital products, business platforms, and custom systems. We deliver websites, stores, mobile apps, desktop apps, and tailored software solutions with a strong focus on business value.',
       primary: 'Request a Proposal Today',
       secondary: 'Book a Demo',
       reviewedOn: 'Reviewed on',
@@ -108,37 +108,37 @@ const en = {
     },
     partner: {
       eyebrow: 'About',
-      title: 'Who We Are as a Design Partner',
+      title: 'Who We Are as a Technology Partner',
       description:
-        'BitTech is a specialized UI UX design agency focused on creating exceptional digital experiences. We are committed to delivering the best user experience possible for your business.',
+        'BitTech is a software company focused on planning, building, and delivering dependable digital solutions for modern businesses. We partner with clients to turn ideas, workflows, and business requirements into practical software products.',
       cards: [
         {
           icon: '/frontend-assets/images/svgs/team.svg',
           alt: 'team',
           title: 'Our Team',
           description:
-            'Our team of expert UI UX designers has a proven track record of creating innovative design solutions that transform businesses across various industries and geographies.',
+            'Our team includes skilled professionals with experience delivering software products and business systems across different industries and business models.',
         },
         {
           icon: '/frontend-assets/images/svgs/client-centeric.svg',
           alt: 'client-centric',
-          title: 'Client-Centric Design',
+          title: 'Client-Centric Delivery',
           description:
-            'At BitTech, our unique design approach focuses on understanding client needs and collaborating to create exceptional, goal-driven digital products.',
+            'At BitTech, we focus on understanding business needs, defining practical requirements, and delivering software that supports real operational goals.',
         },
         {
           icon: '/frontend-assets/images/svgs/testimonial.svg',
           alt: 'testimonial',
-          title: 'Testimonials Showcase',
+          title: 'Proven Results',
           description:
-            'Do not just take our word for it. Explore testimonials and case studies that show how our design solutions help businesses achieve their goals.',
+            'Explore testimonials and case studies that show how our software solutions help businesses improve efficiency, reach customers, and support growth.',
         },
       ],
     },
     mission: {
       eyebrow: 'Our Mission',
       text:
-        'BitTech strives to be a leading UI UX design agency known for innovative solutions that deliver exceptional user experiences and drive business growth. We blend creativity and user-centered design to craft intuitive, standout products and partner with clients to achieve lasting impact.',
+        'BitTech strives to be a leading software company known for dependable solutions that improve operations, support growth, and create long-term business value. We combine technical execution, product thinking, and practical problem solving to deliver software that works.',
       caption: 'Since 2020, what we get...',
       metrics: [
         {
@@ -181,44 +181,44 @@ const en = {
     },
     culture: {
       eyebrow: 'Our Culture',
-      title: 'How our team blends UI UX, branding, and no-code',
-      description: 'We believe in clear communication, proactive problem solving, and full transparency.',
+      title: 'How our team delivers software with clarity and discipline',
+      description: 'We believe in clear communication, practical thinking, proactive problem solving, and full transparency throughout delivery.',
     },
     values: {
       eyebrow: 'Our Value',
       text:
-        'Together, we make perfect partners. We offer worry-free partnerships and deliver your vision into reality with our top-tier creativity. No fluff, just the good stuff.',
+        'We build strong partnerships through clear execution, responsible communication, and software solutions designed around real business needs.',
       items: [
         {
           icon: '/frontend-assets/images/about-crafted.webp',
           title: 'Crafted, not copied',
           description:
-            'No two problems are exactly alike, which is why we believe every project deserves a specific tailored solution, including yours.',
+            'No two businesses operate the same way, which is why every software solution we build is tailored to the needs of the client.',
         },
         {
           icon: '/frontend-assets/images/about-seamless-collaboration.webp',
           title: 'Seamless collaboration',
           description:
-            'We ensure all deliverables are met on time because we love smooth-sailing projects. Our project managers are always ready to discuss and provide updates.',
+            'We keep projects organized, communication clear, and delivery on track so clients always know what is happening and what comes next.',
         },
         {
           icon: '/frontend-assets/images/about-stay-flexible.webp',
           title: 'Stay flexible',
           description:
-            'We remain adaptable to urgent needs and changes as your project evolves.',
+            'We stay adaptable as requirements evolve, helping businesses respond to change without losing delivery momentum.',
         },
         {
           icon: '/frontend-assets/images/about-transparent-pricing.webp',
           title: 'Transparent pricing',
           description:
-            'We provide a clear breakdown of invoices with no hidden fees. Whether project-based or recurring, you can cancel anytime.',
+            'We provide clear pricing and scope visibility so clients can make informed decisions without hidden surprises.',
         },
       ],
     },
     team: {
       eyebrow: 'Our Team',
-      title: 'Principles that guide our design decisions',
-      description: 'Rest assured. Your project is in good hands.',
+      title: 'Principles that guide how we build software',
+      description: 'Your product is handled by a team that values quality, clarity, and accountability.',
       members: [
         { image: '/frontend-assets/images/about-nasir.webp', name: 'Nasir Ali', role: 'CEO & Founder' },
         { image: '/frontend-assets/images/about-ali.webp', name: 'Mohammad Ali', role: 'Sales Director' },
@@ -247,12 +247,12 @@ const en = {
   },
   home: {
     hero: {
-      titleStart: 'Creative Intelligence',
-      badge: 'No Code',
-      titleEnd: 'in Every Pixel',
-      descriptionPrefix: 'We craft',
-      highlight: 'stunning',
-      descriptionSuffix: 'designs for businesses worldwide.',
+      titleStart: 'Reliable Software',
+      badge: 'Business Solutions',
+      titleEnd: 'for Modern Companies',
+      descriptionPrefix: 'We build',
+      highlight: 'professional software products',
+      descriptionSuffix: 'for businesses worldwide.',
       primary: 'Schedule Call',
       primaryHover: 'Lets Talk',
       secondary: '© 2025 Work',
@@ -260,22 +260,22 @@ const en = {
     },
     partners: 'Trusted by Industry Leaders & Fast-Growing Startups',
     services: {
-      eyebrow: 'WE are great at',
-      title: 'UI UX Design and Product Experience Services',
-      description: 'Designs with Exceptional User Experiences',
+      eyebrow: 'What we build',
+      title: 'Software Development Services for Growing Businesses',
+      description: 'Practical digital products built around business goals',
       items: [
-        { href: 'services/ui-ux-design', label: 'FOR DIGITAL EXPERIENCES', title: 'UI UX Design', ariaLabel: 'Read more about our UI UX Design service' },
-        { href: 'services/product-revamp', label: 'For Startups & Existing Companies', title: 'Product Revamp', ariaLabel: 'Read more about our Product Revamp service' },
-        { href: 'services/brand-design', label: 'FOR VISUAL STORYTELLERS', title: 'Brand Design', ariaLabel: 'Read more about our Brand Design service' },
-        { href: 'services/no-code-development', label: 'FOR RAPID APP BUILDERS', title: 'No Code Development', ariaLabel: 'Read more about our No Code Development service' },
-        { href: 'services/mvp-design', label: 'FOR STARTUPS & FOUNDERS', title: 'MVP Design', ariaLabel: 'Read more about our MVP Design service' },
-        { href: 'services/team-extension', label: 'Dedicated ux ui Team', title: 'Team Extension', ariaLabel: 'Read more about our Team Extension service' },
+        { href: 'services/ui-ux-design', label: 'FOR BUSINESS PRESENCE', title: 'Website Development', ariaLabel: 'Read more about our Website Development service' },
+        { href: 'services/product-revamp', label: 'FOR MODERNIZATION & SCALE', title: 'Custom Software Development', ariaLabel: 'Read more about our Custom Software Development service' },
+        { href: 'services/brand-design', label: 'FOR ONLINE SALES', title: 'E-commerce Development', ariaLabel: 'Read more about our E-commerce Development service' },
+        { href: 'services/no-code-development', label: 'FOR MOBILE USERS', title: 'Mobile App Development', ariaLabel: 'Read more about our Mobile App Development service' },
+        { href: 'services/mvp-design', label: 'FOR OPERATIONS & MANAGEMENT', title: 'CRM & ERP Systems', ariaLabel: 'Read more about our CRM and ERP Systems service' },
+        { href: 'services/team-extension', label: 'FOR LONG-TERM DELIVERY', title: 'Technical Partnership', ariaLabel: 'Read more about our Technical Partnership service' },
       ],
     },
     showcase: {
       eyebrow: 'how we helped others succeed',
       title: 'Our Creative Showcase',
-      description: 'We have become experts in creating top-notch digital products. We design beautifully and develop excellently. And we care deeply about what we do.',
+      description: 'We build software products that serve real users, support business operations, and solve practical market needs.',
       projects: [
         { image: '/storage/biscofa.png', name: 'Biscofa', title: 'A cafe ordering app for coffee, drinks, snacks, and everyday favorites.' },
         { image: '/storage/elgawhra.png', name: 'Elgawhra', title: 'A retail experience for selling nuts, snacks, and specialty food products.' },
@@ -287,65 +287,65 @@ const en = {
       title: 'Your project here',
       prefix: 'The proof is in our work. Check out ',
       link: 'our case studies',
-      suffix: ' to learn how our product development services can transform your business.',
+      suffix: ' to see how our software development services can support your next product or platform.',
       primary: 'Book a discovery call',
       secondary: 'Lets Talk',
     },
     process: {
       eyebrow: 'Our process, Your Advantage',
-      title: 'From Idea To Execution',
-      description: 'We have become experts in creating top-notch digital products. We design beautifully and develop excellently. And we care deeply about what we do.',
+      title: 'From Requirements To Delivery',
+      description: 'Our process is built to move software projects forward with clarity, structure, and measurable progress.',
       steps: [
-        { title: 'Discovery', subtitle: 'Research & Domain Analysis', description: "Don't ignore the crucial step of Research & Development in the UX Design Process! Discover and solve user problems to launch a successful product. Gather data on the target audience and analyze customer feedback. Improve user experience", mobileImage: '/frontend-assets/images/home-process-mob-1.webp' },
-        { title: 'Flows', subtitle: 'User Journey Map Sitemap', description: 'Create successful user flows for your product in the UX design process by mapping user journeys and interactions. Define product ideas and goals, tailored to user needs, behavior, and expectations. Test with real users for optimization.', mobileImage: '/frontend-assets/images/home-process-mob-2.webp' },
-        { title: 'Wireframes', subtitle: 'Low - Fidelity Design', description: 'Define the content and functionality of your product with wireframes in the UX Design process. Brainstorm multiple ideas, get feedback, and refine for high fidelity wireframes. Enhance the user interface for a natural and intuitive look.', mobileImage: '/frontend-assets/images/home-process-mob-3.webp' },
-        { title: 'Mockups', subtitle: 'High - Fidelity Design', description: "Visualize your product's appearance with mockups in the UX Design. Detailed design for every screen gets reviewed by stakeholders and the design team. Get it tested with users for improved design based on their needs and expectations.", mobileImage: '/frontend-assets/images/home-process-mob-4.webp' },
-        { title: 'Prototyping', subtitle: 'Interaction Design', description: 'UX Designers create clickable prototypes for your product using tools like Invision to assess product functionality. Gather user feedback and collaborate with development team to create improved version of the design for implementation.', mobileImage: '/frontend-assets/images/home-process-mob-5.webp' },
-        { title: 'Testing', subtitle: 'Usability Testing', description: 'UX designers focus on improving product usability by testing with real users. Define the testing goals and scenarios and recruit a target audience. Conduct usability tests, analyze results, and make changes for optimal user experience.', mobileImage: '/frontend-assets/images/home-process-mob-6.webp' },
+        { title: 'Discovery', subtitle: 'Business & Requirement Analysis', description: 'We start by understanding your business model, users, workflows, and technical needs so the software solves the right problem from the beginning.', mobileImage: '/frontend-assets/images/home-process-mob-1.webp' },
+        { title: 'Planning', subtitle: 'Scope & Solution Mapping', description: 'We define the system scope, key features, user flows, and delivery priorities to create a clear execution path for the product.', mobileImage: '/frontend-assets/images/home-process-mob-2.webp' },
+        { title: 'Architecture', subtitle: 'System & Interface Design', description: 'We structure the product experience and technical direction to ensure the solution is usable, scalable, and aligned with project goals.', mobileImage: '/frontend-assets/images/home-process-mob-3.webp' },
+        { title: 'Build', subtitle: 'Implementation & Iteration', description: 'Our team develops the product in organized stages, reviews progress regularly, and refines details as the solution takes shape.', mobileImage: '/frontend-assets/images/home-process-mob-4.webp' },
+        { title: 'Validation', subtitle: 'Testing & Quality Assurance', description: 'We test critical flows, confirm core functionality, and resolve issues before launch so the product is reliable in real use.', mobileImage: '/frontend-assets/images/home-process-mob-5.webp' },
+        { title: 'Launch', subtitle: 'Deployment & Ongoing Support', description: 'We help move the software into production and support the next steps for improvement, maintenance, and long-term growth.', mobileImage: '/frontend-assets/images/home-process-mob-6.webp' },
       ],
     },
     gradient: {
-      title: 'Design That Thinks. Interfaces That Feel.',
-      description: 'At BitTech, we craft AI-ready design systems for modern software responsive, scalable, and human-centered.',
-      primary: 'See AI in Action',
+      title: 'Software That Works. Solutions That Scale.',
+      description: 'At BitTech, we build modern software solutions that are dependable, scalable, and aligned with business needs.',
+      primary: 'View Our Work',
       secondary: 'Lets Talk',
     },
     faq: {
       eyebrow: 'FAQs',
       title: 'Questions? We’ve Got Answers',
-      description: 'BitTech reduces design complexity & speeds up product launches with clear UX workflows, scalable visual systems, and no-code execution.',
+      description: 'BitTech helps businesses plan, build, and improve software products with a clear process and dependable execution.',
       primary: 'Book a free call',
       secondary: 'Lets Talk',
       items: [
         {
-          question: 'What is UI UX design, and why is it important?',
+          question: 'What types of software solutions does BitTech build?',
           answers: [
-            'UX design, or user experience design, is designing digital products that are easy to use and provide a positive experience for the user. It is important because a good UX design can increase user satisfaction, engagement, and conversions.',
+            'BitTech builds a wide range of software solutions for businesses, including websites, online stores, mobile applications, desktop applications, CRM systems, ERP systems, and custom business platforms.',
           ],
         },
         {
-          question: 'What is the UX design process, and how long does it take?',
+          question: 'Do you develop custom software based on business requirements?',
           answers: [
-            "UI design, or user interface design, is the visual design of digital products, including the layout, colors, typography, and other elements. It differs from UX design, focusing more on the product's aesthetic appeal and visual aspects. In contrast, UX design focuses on the overall experience of the user.",
+            'Yes. We work closely with clients to understand their business processes, goals, and operational needs, then build software solutions tailored to those requirements.',
           ],
         },
         {
-          question: 'What types of UX design services do you offer?',
+          question: 'Can BitTech build systems for internal operations and management?',
           answers: [
-            'We offer various UX design services, including UX research, wireframing, prototyping, usability testing, and graphics design. We work closely with our clients to understand their unique needs and goals and provide customized solutions to help them achieve their objectives.',
+            'Yes. We develop internal business systems such as CRM platforms, ERP systems, dashboards, and management tools that help companies organize operations and improve efficiency.',
           ],
         },
         {
-          question: 'How does BitTech UI UX Design differ from other design solutions?',
+          question: 'How does BitTech approach software projects?',
           answers: [
-            'At BitTech, we believe in the power of Human-Computer Interaction and leverage it to make informed, data-driven design decisions that set us apart from the competition. As a leading UI UX design studio in Pakistan, we follow a design strategy that begins with discovering the needs and pain points of users and ends with real user testing for direct feedback. This approach enables us to create user-centric designs that enhance usability, accessibility, and overall user satisfaction.',
-            "Our design philosophy is simple: put users at the center of everything we do. Whether it's UX research or designing User Flows, Wireframing or Prototyping our team of expert UI UX designers ensure that your users are considered in every phase of designing to deliver outstanding results that meet the unique needs of your business.",
+            'Our approach starts with understanding the business requirement, defining a practical solution, planning delivery clearly, and building the product in stages with testing and regular communication throughout the project.',
+            'We focus on delivering software that is useful, maintainable, and aligned with business priorities rather than building features without clear purpose.',
           ],
         },
         {
-          question: 'Are there any customer reviews or case studies available for BitTech UI UX Design?',
+          question: 'Are there any customer reviews or case studies available for BitTech?',
           answers: [
-            "At BitTech, we take pride in our customer reviews and case studies that showcase our expertise in the UI UX design industry. You can easily access them on our website to get a glimpse of our work and the impact it has had on our clients' businesses. As a top-class UI UX design firm, we have worked with a diverse range of clients worldwide, helping them create engaging and intuitive digital experiences for their customers. With our expertise and user-centered design approach, you can be rest assured as we will take your website design to the next level.",
+            "Yes. Our website includes reviews and case studies that reflect the quality of our work and the range of software solutions we have delivered for different clients and industries.",
           ],
         },
       ],

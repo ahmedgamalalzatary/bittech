@@ -31,16 +31,16 @@ const SocialList = ({ className, style }) => (
 )
 
 const SERVICES = [
-  ['services/ui-ux-consulting', 'UI UX Consultation'],
-  ['services/ui-ux-design', 'UI UX Design'],
-  ['services/web-design', 'Web Design'],
-  ['services/mvp-design', 'MVP Design'],
-  ['services/product-revamp', 'Product Revamp'],
-  ['services/brand-design', 'Brand Design'],
-  ['services/no-code-development', 'NoCode Development'],
-  ['services/webflow-development', 'Webflow Development'],
-  ['services/framer-development', 'Framer Development'],
-  ['services/figma-sites', 'Figma Design'],
+  ['/', 'UI UX Consultation'],
+  ['/', 'UI UX Design'],
+  ['/', 'Web Design'],
+  ['/', 'MVP Design'],
+  ['/', 'Product Revamp'],
+  ['/', 'Brand Design'],
+  ['/', 'NoCode Development'],
+  ['/', 'Webflow Development'],
+  ['/', 'Framer Development'],
+  ['/', 'Figma Design'],
 ]
 
 const INDUSTRIES = ['AI/ML', 'SaaS', 'Web3', 'Travel', 'Fintech', 'EdTech', 'Logistics', 'Real Estate', 'Healthcare', 'E-commerce']
