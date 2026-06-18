@@ -63,10 +63,10 @@ const en = {
     },
     noResults: 'No projects found for the selected category.',
     portfolio: [
-      { name: 'Gig Desk', title: 'All-in-one dashboard to manage gigs, tours, venues, and payrolls.' },
-      { name: 'Ship Track', title: 'Real-time shipment tracking and delivery management at your fingertips' },
-      { name: 'Villa Vault', title: "Discover and book the world's finest luxury villas with ease" },
-      { name: 'Bloom Money', title: 'Empowering communities with financial solutions.' },
+      { name: 'Biscofa', title: 'A cafe ordering app for coffee, drinks, snacks, and everyday favorites.' },
+      { name: 'Elgawhra', title: 'A retail experience for selling nuts, snacks, and specialty food products.' },
+      { name: 'Capella Care', title: 'A cosmetics and beauty store offering skincare, makeup, and self-care essentials.' },
+      { name: 'Capella App', title: 'A women-focused beauty platform built around cosmetics, care, and lifestyle needs.' },
     ],
   },
   about: {
@@ -277,10 +277,10 @@ const en = {
       title: 'Our Creative Showcase',
       description: 'We have become experts in creating top-notch digital products. We design beautifully and develop excellently. And we care deeply about what we do.',
       projects: [
-        { image: '/storage/280/3.png', name: 'Gig Desk', title: 'All-in-one dashboard to manage gigs, tours, venues, and payrolls.' },
-        { image: '/storage/278/2.png', name: 'Ship Track', title: 'Real-time shipment tracking and delivery management at your fingertips' },
-        { image: '/storage/277/1-(2).png', name: 'Villa Vault', title: "Discover and book the world's finest luxury villas with ease" },
-        { image: '/storage/275/Rectangle-6338.png', name: 'Bloom Money', title: 'Empowering communities with financial solutions.' },
+        { image: '/storage/biscofa.png', name: 'Biscofa', title: 'A cafe ordering app for coffee, drinks, snacks, and everyday favorites.' },
+        { image: '/storage/elgawhra.png', name: 'Elgawhra', title: 'A retail experience for selling nuts, snacks, and specialty food products.' },
+        { image: '/storage/capellacare(2).png', name: 'Capella Care', title: 'A cosmetics and beauty store offering skincare, makeup, and self-care essentials.' },
+        { image: '/storage/capellacare.png', name: 'Capella App', title: 'A women-focused beauty platform built around cosmetics, care, and lifestyle needs.' },
       ],
     },
     discovery: {

@@ -100,7 +100,7 @@ export default function Work() {
                   className="w-full h-full object-cover"
                   width="600"
                   height="685"
-                  src="/storage/280/3.png"
+                  src="/storage/biscofa.png"
                   alt="All-in-one dashboard to manage gigs, tours, venues, and payrolls."
                   loading="lazy"
                 />
@@ -122,7 +122,7 @@ export default function Work() {
                   className="w-full h-full object-cover"
                   width="600"
                   height="685"
-                  src="/storage/278/2.png"
+                  src="/storage/elgawhra.png"
                   alt="Real-time shipment tracking and delivery management at your fingertips"
                   loading="lazy"
                 />
@@ -144,7 +144,7 @@ export default function Work() {
                   className="w-full h-full object-cover"
                   width="600"
                   height="685"
-                  src="/storage/277/1-(2).png"
+                  src="/storage/capellacare(2).png"
                   alt="Discover and book the world&#039;s finest luxury villas with ease"
                   loading="lazy"
                 />
@@ -166,7 +166,7 @@ export default function Work() {
                   className="w-full h-full object-cover"
                   width="600"
                   height="685"
-                  src="/storage/275/Rectangle-6338.png"
+                  src="/storage/capellacare.png"
                   alt="Empowering communities with financial solutions."
                   loading="lazy"
                 />

@@ -202,7 +202,7 @@ export default function Home() {
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="200" height="140" src="/frontend-assets/elgawhra.png"
+                    <img width="200" height="100" src="/frontend-assets/elgawhra.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -226,7 +226,7 @@ export default function Home() {
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="200" height="140" src="/frontend-assets/elgawhra.png"
+                    <img width="200" height="100" src="/frontend-assets/elgawhra.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -242,7 +242,7 @@ export default function Home() {
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="200" height="140" src="/frontend-assets/elgawhra.png"
+                    <img width="200" height="100" src="/frontend-assets/elgawhra.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
@@ -258,7 +258,7 @@ export default function Home() {
                       alt="adiqat" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
-                    <img width="200" height="140" src="/frontend-assets/elgawhra.png"
+                    <img width="200" height="100" src="/frontend-assets/elgawhra.png"
                       alt="trafilea" decoding="async" />
                   </div>
                   <div className="slide flex items-center">
