@@ -12,6 +12,7 @@ import '../frontend-assets/css/home.css'
 import './inline-styles.css'
 
 import App from './App.jsx'
+import './i18n/index.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

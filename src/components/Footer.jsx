@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const DribbbleIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
@@ -73,46 +74,50 @@ const SERVICES = [
 const INDUSTRIES = ['AI/ML', 'SaaS', 'Web3', 'Travel', 'Fintech', 'EdTech', 'Logistics', 'Real Estate', 'Healthcare', 'E-commerce']
 
 export default function Footer() {
+  const { t } = useTranslation()
+  const services = t('footer.servicesList', { returnObjects: true, defaultValue: [] })
+  const industries = t('footer.industriesList', { returnObjects: true, defaultValue: [] })
+
   return (
     <footer className="footer relative behind-cursor">
       <div className="container">
         <div className="footer-grid">
           <div className="footer-text">
             <p className="fs_18 lh_27 ff_inter text_gray_495">
-              We transform ideas into user-centered digital experiences for businesses worldwide, from Fortune 500s to startups, using Figma, Webflow, and no-code solutions.
+              {t('footer.intro')}
             </p>
             <SocialList className="list-unstyled flex md_hidden" style={{ gap: '16px', marginTop: '32px' }} />
           </div>
           <div className="quick-links">
-            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">Company</h2>
+            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">{t('footer.company')}</h2>
             <ul className="flex flex-col list-unstyled" style={{ gap: '14px', marginTop: '20px' }}>
-              <li><NavLink to="/" end className="fs_15 lh_20 ff_inter text_gray_200">Home</NavLink></li>
-              <li><NavLink to="/about" className="fs_15 lh_20 ff_inter text_gray_200">About</NavLink></li>
-              <li><NavLink to="/work" className="fs_15 lh_20 ff_inter text_gray_200">Work</NavLink></li>
+              <li><NavLink to="/" end className="fs_15 lh_20 ff_inter text_gray_200">{t('common.nav.home')}</NavLink></li>
+              <li><NavLink to="/about" className="fs_15 lh_20 ff_inter text_gray_200">{t('common.nav.about')}</NavLink></li>
+              <li><NavLink to="/work" className="fs_15 lh_20 ff_inter text_gray_200">{t('common.nav.work')}</NavLink></li>
             </ul>
           </div>
           <div className="quick-links">
-            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">Services</h2>
+            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">{t('footer.services')}</h2>
             <ul className="flex flex-col list-unstyled" style={{ gap: '14px', marginTop: '20px' }}>
-              {SERVICES.map(([href, label]) => (
+              {SERVICES.map(([href], index) => (
                 <li key={href}>
-                  <a href={href} className="fs_15 lh_20 ff_inter text_gray_200">{label}</a>
+                  <a href={href} className="fs_15 lh_20 ff_inter text_gray_200">{services[index]}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div className="quick-links">
-            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">Industries</h2>
+            <h2 className="fs_16 lh_20 fw_600 ff_inter text_white">{t('footer.industries')}</h2>
             <ul className="flex flex-col list-unstyled" style={{ gap: '14px', marginTop: '20px' }}>
-              {INDUSTRIES.map((name) => (
-                <li key={name}><span className="fs_15 lh_20 ff_inter text_gray_200">{name}</span></li>
+              {INDUSTRIES.map((name, index) => (
+                <li key={name}><span className="fs_15 lh_20 ff_inter text_gray_200">{industries[index]}</span></li>
               ))}
             </ul>
           </div>
         </div>
         <div className="footer-bottom flex flex-wrap items-center justify-center" style={{ gap: '20px' }}>
           <p className="fs_12 lh_normal ff_inter text_white_70">
-            © ZeeFrames (Private) Limited. All Rights Reserved.
+            {t('footer.copyright')}
           </p>
           <SocialList className="list-unstyled hidden md_flex justify-center" style={{ gap: '16px' }} />
         </div>

@@ -69,6 +69,11 @@
     background: var(--color-primary)
 }
 
+[dir="rtl"] .services-content::before,
+[dir="rtl"] .services-content::after {
+    right: -27px
+}
+
 .services-listing {
     counter-reset: service-counter
 }
@@ -86,6 +91,11 @@
     font-size: 16px;
     font-weight: 500;
     color: var(--color-white)
+}
+
+[dir="rtl"] .service-item::before {
+  top: -30px;
+  left: auto;
 }
 
 .service-item.active::before,

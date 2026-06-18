@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LanguageSwitcher from './LanguageSwitcher.jsx'
 
 export default function Header() {
   const [menuShown, setMenuShown] = useState(false)
+  const { t } = useTranslation()
 
   // mirrors frontend-assets/js/common.js: lock body scroll while mobile menu is open
   useEffect(() => {
@@ -27,16 +30,25 @@ export default function Header() {
             id="mobile-menu"
           >
             <li>
-              <NavLink to="/" end className={navClass} onClick={() => setMenuShown(false)}>Home</NavLink>
+              <NavLink to="/" end className={navClass} onClick={() => setMenuShown(false)}>{t('common.nav.home')}</NavLink>
             </li>
             <li>
-              <NavLink to="/about" className={navClass} onClick={() => setMenuShown(false)}>About</NavLink>
+              <NavLink to="/about" className={navClass} onClick={() => setMenuShown(false)}>{t('common.nav.about')}</NavLink>
             </li>
             <li>
-              <NavLink to="/work" className={navClass} onClick={() => setMenuShown(false)}>Work</NavLink>
+              <NavLink to="/work" className={navClass} onClick={() => setMenuShown(false)}>{t('common.nav.work')}</NavLink>
+            </li>
+            <li className="hidden lg_block" style={{ width: '100%' }}>
+              <LanguageSwitcher
+                className="nav-link fs_18 lh_27 ff_inter text_white"
+                onClick={() => setMenuShown(false)}
+              />
             </li>
           </ul>
           <div className="flex items-center" style={{ gap: '12px' }}>
+            <LanguageSwitcher
+              className="nav-link fs_18 lh_27 ff_inter text_white sm-hidden"
+            />
             <button className="theme-toggler relative hidden" id="theme-toggler" aria-label="Toggle theme">
               <div className="theme-icon flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

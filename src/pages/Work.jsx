@@ -1,6 +1,11 @@
 import './Work.css'
+import { useTranslation } from 'react-i18next'
 
 export default function Work() {
+  const { t } = useTranslation()
+  const portfolio = t('work.portfolio', { returnObjects: true, defaultValue: [] })
+  const contactPoints = t('common.contact.points', { returnObjects: true, defaultValue: [] })
+
   return (
     <>
       <section className="hero-section py_80 sm_py_48">
@@ -16,28 +21,28 @@ export default function Work() {
               fetchpriority="high"
             />
             <h1 className="main-heading text_white text-center relative fw_800 uppercase">
-              Our UI UX & Branding Case Studies
+              {t('work.heroTitle')}
             </h1>
             <p
               className="fs_18 sm_fs_16 text_white ff_inter lh_27 capitalize text-center hero-text mx-auto"
               style={{ maxWidth: '571px' }}
             >
-              No matter the industry you’re in, or the asset you need, we can design it for you
+              {t('work.heroText')}
             </p>
             <a
               href="https://calendly.com/contact-zeeframes/30min?month=2025-11"
               target="_blank"
               className="btn-component btn-outlined ff_inter mx-auto btn-animate-swap overflow-hidden relative w-fit"
             >
-              <span className="work-us">Schedule call</span>
-              <span className="lets-talk absolute">Book a Demo</span>
+              <span className="work-us">{t('work.heroPrimary')}</span>
+              <span className="lets-talk absolute">{t('work.heroSecondary')}</span>
             </a>
           </div>
         </div>
       </section>
       <section className="work-section py_80">
         <div className="container">
-          <h2 className="ff_inter fs_16 lh_24 uppercase text_gray_350 fw_400">Choose your industry</h2>
+          <h2 className="ff_inter fs_16 lh_24 uppercase text_gray_350 fw_400">{t('work.filterTitle')}</h2>
           <div className="max-w-full overflow-hidden">
             <div className="filters-wraper flex flex-wrap">
               <label htmlFor="industry-all" className="filter-item ff_inter fs_16 lh_24 fw_500 white">
@@ -49,7 +54,7 @@ export default function Work() {
                   value="all"
                   defaultChecked
                 />
-                All Niches
+                {t('work.filters.all')}
               </label>
               <label htmlFor="industry-fintech" className="filter-item ff_inter fs_16 lh_24 fw_500 white">
                 <input
@@ -59,7 +64,7 @@ export default function Work() {
                   id="industry-fintech"
                   value="FinTech"
                 />
-                FinTech
+                {t('work.filters.fintech')}
               </label>
               <label htmlFor="industry-logistic" className="filter-item ff_inter fs_16 lh_24 fw_500 white">
                 <input
@@ -69,7 +74,7 @@ export default function Work() {
                   id="industry-logistic"
                   value="Logistic"
                 />
-                Logistic
+                {t('work.filters.logistic')}
               </label>
               <label htmlFor="industry-real-estate" className="filter-item ff_inter fs_16 lh_24 fw_500 white">
                 <input
@@ -79,13 +84,13 @@ export default function Work() {
                   id="industry-real-estate"
                   value="Real Estate"
                 />
-                Real Estate
+                {t('work.filters.realEstate')}
               </label>
             </div>
           </div>
           <div id="no-results" className="mt_64 sm_mt_32 text-center" style={{ display: 'none' }}>
             <p className="fs_24 lh_normal fw_500 text_white ff_inter">
-              No projects found for the selected category.
+              {t('work.noResults')}
             </p>
           </div>
           <div id="portfolio-grid" className="mt_64 sm_mt_32 grid md_grid-cols-2 portfolio">
@@ -103,10 +108,10 @@ export default function Work() {
               <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
                 <div>
                   <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>
-                    Gig Desk
+                    {portfolio[0]?.name}
                   </p>
                   <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    All-in-one dashboard to manage gigs, tours, venues, and payrolls.
+                    {portfolio[0]?.title}
                   </h3>
                 </div>
               </div>
@@ -125,10 +130,10 @@ export default function Work() {
               <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
                 <div>
                   <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>
-                    Ship Track
+                    {portfolio[1]?.name}
                   </p>
                   <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Real-time shipment tracking and delivery management at your fingertips
+                    {portfolio[1]?.title}
                   </h3>
                 </div>
               </div>
@@ -147,10 +152,10 @@ export default function Work() {
               <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
                 <div>
                   <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>
-                    Villa Vault
+                    {portfolio[2]?.name}
                   </p>
                   <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Discover and book the world&#039;s finest luxury villas with ease
+                    {portfolio[2]?.title}
                   </h3>
                 </div>
               </div>
@@ -169,10 +174,10 @@ export default function Work() {
               <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
                 <div>
                   <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>
-                    Bloom Money
+                    {portfolio[3]?.name}
                   </p>
                   <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Empowering communities with financial solutions.
+                    {portfolio[3]?.title}
                   </h3>
                 </div>
               </div>
@@ -186,17 +191,16 @@ export default function Work() {
         <div className="container">
           <div className="flex md-flex-wrap" style={{ rowGap: '32px', columnGap: '64px' }}>
             <div className="w-full" style={{ maxWidth: '636px' }}>
-              <span className="fs_14 uppercase text_primary">Contact us</span>
+              <span className="fs_14 uppercase text_primary">{t('common.contact.eyebrow')}</span>
               <h2
                 className="fs_40 sm_fs_28 lh_40 fw_700 capitalize"
                 style={{ marginTop: '32px', marginBottom: '12px', maxWidth: '510px' }}
               >
-                Let’s Build Something You’ll Be Proud Of
+                {t('common.contact.title')}
               </h2>
 
               <p className="ff_inter fs_14 lh_21 text_gray_495" style={{ maxWidth: '534px' }}>
-                Have a project in mind? Whether you need a full UI/UX redesign, a new digital product, or a
-                stronger online presence, our team is ready to help turn your ideas into reality.
+                {t('common.contact.description')}
               </p>
               <ul className="mt-32 list-unstyled flex flex-col" style={{ gap: '12px' }}>
                 <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
@@ -215,7 +219,7 @@ export default function Work() {
                       fill="#BDBDBD"
                     />
                   </svg>
-                  You’ll hear from us within one business day.
+                  {contactPoints[0]}
                 </li>
                 <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
                   <svg
@@ -233,7 +237,7 @@ export default function Work() {
                       fill="#BDBDBD"
                     />
                   </svg>
-                  We’ll understand your goals and gather the right project details.
+                  {contactPoints[1]}
                 </li>
                 <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
                   <svg
@@ -251,7 +255,7 @@ export default function Work() {
                       fill="#BDBDBD"
                     />
                   </svg>
-                  You’ll receive a clear proposal with timeline, scope, and pricing.
+                  {contactPoints[2]}
                 </li>
               </ul>
             </div>
@@ -268,7 +272,7 @@ export default function Work() {
                     type="text"
                     name="full_name"
                     id="fullName"
-                    placeholder="Full Name*"
+                    placeholder={t('common.form.fullName')}
                     required
                   />
                 </div>
@@ -278,7 +282,7 @@ export default function Work() {
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Email Address*"
+                    placeholder={t('common.form.email')}
                     required
                   />
                 </div>
@@ -288,7 +292,7 @@ export default function Work() {
                     type="tel"
                     name="phone"
                     id="phone"
-                    placeholder="Phone Number*"
+                    placeholder={t('common.form.phone')}
                     required
                   />
                 </div>
@@ -298,7 +302,7 @@ export default function Work() {
                     className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140 relative behind-cursor"
                     type="text"
                     id="countryTrigger"
-                    placeholder="Country (Optional)"
+                    placeholder={t('common.form.country')}
                     autoComplete="off"
                     readOnly
                     style={{ cursor: 'pointer' }}
@@ -345,7 +349,7 @@ export default function Work() {
                         type="text"
                         id="countrySearch"
                         className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140"
-                        placeholder="Search country..."
+                        placeholder={t('common.form.searchCountry')}
                         autoComplete="off"
                         style={{ padding: '8px 12px' }}
                       />
@@ -559,7 +563,7 @@ export default function Work() {
                     className="textarea input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140"
                     name="about_project"
                     id="aboutProject"
-                    placeholder="Tell us about your project, goals, timeline, or requirements*"
+                    placeholder={t('common.form.project')}
                     required
                   ></textarea>
                 </div>
@@ -568,12 +572,12 @@ export default function Work() {
                   className="btn-component btn-outlined-primary ff_inter relative behind-cursor"
                   style={{ marginTop: '4px' }}
                 >
-                  Submit Inquiry
+                  {t('common.form.submit')}
                 </button>
               </form>
               <div style={{ marginTop: '32px' }}>
                 <p className="fs_14 lh_normal ff_inter text_gray_350">
-                  Prefer email instead? Feel free to contact us directly.
+                  {t('common.form.preferEmail')}
                 </p>
                 <div
                   className="flex items-center sm-flex-wrap"

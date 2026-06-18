@@ -1,7 +1,15 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import './Home.css'
 
 export default function Home() {
+  const { t } = useTranslation()
+  const contactPoints = t('common.contact.points', { returnObjects: true })
+  const services = t('home.services.items', { returnObjects: true })
+  const showcaseProjects = t('home.showcase.projects', { returnObjects: true })
+  const processSteps = t('home.process.steps', { returnObjects: true })
+  const faqs = t('home.faq.items', { returnObjects: true })
+
   // Replicates the inline interactivity from index2.html (cursor trail + bubbles,
   // FAQ accordion, process-scroll image swap) and its country-dropdown script.
   useEffect(() => {
@@ -108,56 +116,6 @@ export default function Home() {
     animateCircle()
     cleanups.push(() => cancelAnimationFrame(rafId))
 
-    // ----------- Country dropdown -----------
-    const wrapper = document.getElementById('countryWrapper')
-    const dropdown = document.getElementById('countryDropdownPanel')
-    const trigger = document.getElementById('countryTrigger')
-    const valueInput = document.getElementById('countryValue')
-    const searchInput = document.getElementById('countrySearch')
-    const list = document.getElementById('countryDropdown')
-    const chevron = document.getElementById('countryChevron')
-
-    if (wrapper && dropdown && trigger && valueInput && searchInput && list && chevron) {
-      const onTriggerClick = (e) => {
-        e.stopPropagation()
-        dropdown.style.display = 'block'
-        chevron.style.transform = 'translateY(-50%) rotate(180deg)'
-      }
-      const onDropdownClick = (e) => e.stopPropagation()
-      const onListClick = (e) => {
-        if (e.target.tagName === 'LI') {
-          trigger.value = e.target.textContent
-          valueInput.value = e.target.getAttribute('data-value')
-          dropdown.style.display = 'none'
-          chevron.style.transform = 'translateY(-50%) rotate(0deg)'
-        }
-      }
-      const onSearch = () => {
-        const search = searchInput.value.toLowerCase()
-        list.querySelectorAll('li').forEach((item) => {
-          item.style.display = item.textContent.toLowerCase().includes(search) ? 'block' : 'none'
-        })
-      }
-      const onDocClick = (e) => {
-        if (!wrapper.contains(e.target)) {
-          dropdown.style.display = 'none'
-          chevron.style.transform = 'translateY(-50%) rotate(0deg)'
-        }
-      }
-      trigger.addEventListener('click', onTriggerClick)
-      dropdown.addEventListener('click', onDropdownClick)
-      list.addEventListener('click', onListClick)
-      searchInput.addEventListener('input', onSearch)
-      document.addEventListener('click', onDocClick)
-      cleanups.push(() => {
-        trigger.removeEventListener('click', onTriggerClick)
-        dropdown.removeEventListener('click', onDropdownClick)
-        list.removeEventListener('click', onListClick)
-        searchInput.removeEventListener('input', onSearch)
-        document.removeEventListener('click', onDocClick)
-      })
-    }
-
     return () => cleanups.forEach((fn) => fn())
   }, [])
 
@@ -176,31 +134,30 @@ export default function Home() {
               <img className="bubble-img hidden sm-block" src="/frontend-assets/images/home-bubble-mobile.webp"
                 alt="bubble" width="176" height="174" fetchpriority="high" decoding="async" />
               <h1 className="main-heading text_white text-center mt-48 sm-mt-32 relative fw_800 uppercase">
-                Creative Intelligence
-                <sup className="no-code uppercase fs_12 lh_normal text_black_300 sm-hidden">No Code</sup>
-                in Every Pixel
+                {t('home.hero.titleStart')}
+                <sup className="no-code uppercase fs_12 lh_normal text_black_300 sm-hidden">{t('home.hero.badge')}</sup>
+                {t('home.hero.titleEnd')}
               </h1>
               <p
                 className="text_white text-center fs_20 lh_normal ff_inter capitalize mt-12 sm-max-w-319 mx-auto">
-                We craft <span className="text_primary">stunning</span> designs for
-                businesses worldwide.
+                {t('home.hero.descriptionPrefix')} <span className="text_primary">{t('home.hero.highlight')}</span> {t('home.hero.descriptionSuffix')}
               </p>
               <div className="flex mt-48 sm-mt-24 justify-center" style={{ gap: '20px' }}>
                 <a href="https://calendly.com/contact-zeeframes/30min?month=2025-11" target="_blank"
                   className="btn-component btn-light btn-slide-in relative overflow-hidden ff_inter">
-                  <span className="default-text absolute">Schedule Call</span>
+                  <span className="default-text absolute">{t('home.hero.primary')}</span>
                   <span className="hover-content absolute flex items-center w-full justify-start"
                     style={{ gap: '16px', padding: '0 3px' }}>
                     <img src="/frontend-assets/images/svgs/lets-talk.svg" alt="Avatar" />
-                    <span className="hover-text">Lets Talk 🤙</span>
+                    <span className="hover-text">{t('home.hero.primaryHover')}</span>
                   </span>
                 </a>
                 <a href="https://www.figma.com/proto/Wvc5EAdw0leAMdlJ3tF6Be/ZeeFrames-Portfolio-New-Branding?page-id=0%3A1&node-id=1653-10&viewport=-98%2C1247%2C0.16&t=I70aaK7I2yFjTlya-1&scaling=scale-down&content-scaling=fixed"
                   target="_blank"
                   className="btn-component btn-outlined anim-translate overflow-hidden relative ff_inter">
-                  <span className="anim-translate-content">© 2025 Work</span>
+                  <span className="anim-translate-content">{t('home.hero.secondary')}</span>
                   <span className="anim-translate-slice absolute flex items-center" style={{ gap: '8px' }}>
-                    Open
+                    {t('home.hero.secondaryHover')}
                     <span className="hover-icon mt-10">
                       {/* Yellow hover SVG icon */}
                       <svg style={{ marginTop: '5px' }} xmlns="http://www.w3.org/2000/svg" width="20"
@@ -235,7 +192,7 @@ export default function Home() {
         <div className="trusted-partners-wraper overflow-hidden">
           <div className="container overflow-hidden">
             <p className="text-center ff_inter fs_14 fw_500 lh_normal uppercase">
-              Trusted by Industry Leaders & Fast-Growing Startups
+              {t('home.partners')}
             </p>
             <div className="main-animate grid items-center mt-24">
               <div className="slider m-auto relative w-full grid items-center">
@@ -317,147 +274,35 @@ export default function Home() {
         <div className="container">
           <div className="pt_80 sm_pt_0">
             <div className="text-center">
-              <p className="fs_14 text_primary uppercase">WE are great at</p>
+              <p className="fs_14 text_primary uppercase">{t('home.services.eyebrow')}</p>
               <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
-                UI UX Design and Product Experience Services
+                {t('home.services.title')}
               </h2>
               <p className="fs_14 lh_21 ff_inter text_gray_495">
-                Designs with Exceptional User Experiences
+                {t('home.services.description')}
               </p>
             </div>
             <div className="services-wraper grid md_grid-cols-2 mt_64 sm_mt_32">
-              <a href="services/ui-ux-design" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      FOR DIGITAL EXPERIENCES
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      UI UX Design
-                    </h3>
+              {services.map((service) => (
+                <a key={service.title} href={service.href} className="service-card relative">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
+                        {service.label}
+                      </p>
+                      <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
+                        {service.title}
+                      </h3>
+                    </div>
+                    <div className="arrow-box shrink-0 flex items-center justify-center" aria-label={service.ariaLabel}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
                   </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our UI UX Design service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <a href="services/product-revamp" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      For Startups & Existing Companies
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      Product Revamp
-                    </h3>
-                  </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our Product Revamp service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <a href="services/brand-design" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      FOR VISUAL STORYTELLERS
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      Brand Design
-                    </h3>
-                  </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our Brand Design service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <a href="services/no-code-development" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      FOR RAPID APP BUILDERS
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      No Code Development
-                    </h3>
-                  </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our No Code Development service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <a href="services/mvp-design" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      FOR STARTUPS & FOUNDERS
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      MVP Design
-                    </h3>
-                  </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our Brand Design service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <a href="services/team-extension" className="service-card relative">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="fs_18 sm_fs_16 lh_27 ff_inter text_white uppercase servic-text ff_inter">
-                      Dedicated ux ui Team
-                    </p>
-                    <h3 className="fs_28 sm_fs_22 lh_normal text_white servic-title">
-                      Team Extension
-                    </h3>
-                  </div>
-                  <div className="arrow-box shrink-0 flex items-center justify-center"
-                    aria-label="Read more about our Brand Design service">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
-                      fill="none">
-                      <path d="M14.5833 5.41663L5 15" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M6.66663 5H15V13.3333" stroke="#9D9D9D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
+                </a>
+              ))}
 
             </div>
           </div>
@@ -467,100 +312,47 @@ export default function Home() {
         <div className="container">
           <div className="text-center mx-auto" style={{ maxWidth: '596px' }}>
             <p className="fs_14 text_primary uppercase">
-              how we helped others succeed
+              {t('home.showcase.eyebrow')}
             </p>
             <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
-              Our Creative Showcase
+              {t('home.showcase.title')}
             </h2>
             <p className="fs_14 lh_21 ff_inter text_gray_495">
-              We have become experts in creating top-notch digital products. We
-              design beautifully and develop excellently. And we care deeply
-              about what we do.
+              {t('home.showcase.description')}
             </p>
           </div>
 
           <div className="mt_64 sm_mt_32 grid md_grid-cols-2 portfolio">
-            <div className="portfolio-card">
-              <div className="portfolio-thumbnail overflow-hidden">
-                <img className="w-full h-full object-cover" width="600" height="685" src="/storage/280/3.png"
-                  alt="All-in-one dashboard to manage gigs, tours, venues, and payrolls."
-                  loading="lazy" />
-              </div>
-              <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
-                <div>
-                  <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>Gig Desk</p>
-                  <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    All-in-one dashboard to manage gigs, tours, venues, and payrolls.
-                  </h3>
+            {showcaseProjects.map((project) => (
+              <div className="portfolio-card" key={project.name}>
+                <div className="portfolio-thumbnail overflow-hidden">
+                  <img className="w-full h-full object-cover" width="600" height="685" src={project.image} alt={project.title} loading="lazy" />
+                </div>
+                <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
+                  <div>
+                    <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>{project.name}</p>
+                    <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">{project.title}</h3>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="portfolio-card">
-              <div className="portfolio-thumbnail overflow-hidden">
-                <img className="w-full h-full object-cover" width="600" height="685" src="/storage/278/2.png"
-                  alt="Real-time shipment tracking and delivery management at your fingertips"
-                  loading="lazy" />
-              </div>
-              <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
-                <div>
-                  <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>Ship Track
-                  </p>
-                  <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Real-time shipment tracking and delivery management at your fingertips
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div className="portfolio-card">
-              <div className="portfolio-thumbnail overflow-hidden">
-                <img className="w-full h-full object-cover" width="600" height="685" src="/storage/277/1-(2).png"
-                  alt="Discover and book the world&#039;s finest luxury villas with ease"
-                  loading="lazy" />
-              </div>
-              <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
-                <div>
-                  <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>Villa Vault
-                  </p>
-                  <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Discover and book the world&#039;s finest luxury villas with ease
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div className="portfolio-card">
-              <div className="portfolio-thumbnail overflow-hidden">
-                <img className="w-full h-full object-cover" width="600" height="685"
-                  src="/storage/275/Rectangle-6338.png"
-                  alt="Empowering communities with financial solutions." loading="lazy" />
-              </div>
-              <div className="portfolio-content flex justify-between" style={{ alignItems: 'end' }}>
-                <div>
-                  <p className="fs_14 lh_normal ff_inter text_white" style={{ marginBottom: '8px' }}>Bloom Money
-                  </p>
-                  <h3 className="fs_28 sm_fs_24 ff_inter lh_normal fw_600 text_white portfolio-title">
-                    Empowering communities with financial solutions.
-                  </h3>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="book-discovery-call">
             <div className="text-center mx-auto" style={{ maxWidth: '494px' }}>
               <h2 className="fs_24 lh_normal fw_600 text_white">
-                Your project here
+                {t('home.discovery.title')}
               </h2>
               <p className="fs_15 sm_fs_14 lh_normal ff_inter text_gray_495"
                 style={{ marginTop: '16px', marginBottom: '24px' }}>
-                The proof is in our work. Check out
-                <a href="work" className="text_primary" style={{ textDecoration: 'underline' }}>our case studies</a>
-                to learn how our product development services can transform your
-                business.
+                {t('home.discovery.prefix')}
+                <a href="work" className="text_primary" style={{ textDecoration: 'underline' }}>{t('home.discovery.link')}</a>
+                {t('home.discovery.suffix')}
               </p>
               <div className="flex justify-center mx-auto">
                 <a href="https://calendly.com/contact-zeeframes/30min?month=2025-11" target="_blank"
                   className="btn-component btn-primary w-fit mx-auto btn-animate-swap overflow-hidden relative ff_inter">
-                  <span className="work-us">Book a discovery call</span>
+                  <span className="work-us">{t('home.discovery.primary')}</span>
                   <svg className="hover-opacity-0 shrink-0" xmlns="http://www.w3.org/2000/svg" width="21"
                     height="20" viewBox="0 0 21 20" fill="none">
                     <path d="M15.0833 5.41667L5.5 15" stroke="#0D0D0D" strokeWidth="1.5"
@@ -568,7 +360,7 @@ export default function Home() {
                     <path d="M7.16663 5H15.5V13.3333" stroke="#0D0D0D" strokeWidth="1.5"
                       strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
-                  <span className="lets-talk absolute">Lets Talk</span>
+                  <span className="lets-talk absolute">{t('home.discovery.secondary')}</span>
                 </a>
               </div>
             </div>
@@ -578,155 +370,39 @@ export default function Home() {
 
       <section className="py_80 sm_py_32">
         <div className="container">
-          <div className="text-center mx-auto" style={{ maxWidth: '596px' }}>
-            <p className="fs_14 text_primary uppercase">
-              Our process, Your Advantage
-            </p>
-            <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
-              From Idea To Execution
-            </h2>
-            <p className="fs_14 lh_21 ff_inter text_gray_495">
-              We have become experts in creating top-notch digital products. We
-              design beautifully and develop excellently. And we care deeply
-              about what we do.
-            </p>
-          </div>
+            <div className="text-center mx-auto" style={{ maxWidth: '596px' }}>
+              <p className="fs_14 text_primary uppercase">
+                {t('home.process.eyebrow')}
+              </p>
+              <h2 className="fs_40 sm_fs_28 lh_40 fw_700 text_white section-heading">
+                {t('home.process.title')}
+              </h2>
+              <p className="fs_14 lh_21 ff_inter text_gray_495">
+                {t('home.process.description')}
+              </p>
+            </div>
 
           <div className="mt_64 sm_mt_32">
             <div className="flex justify-between gap-80 relative">
               <div className="services-content relative w-full" style={{ maxWidth: '609px', paddingLeft: '50px' }}>
                 <ul className="services-listing list-unstyled flex flex-col">
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>01</span>
-                      Discovery
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      Research & Domain Analysis
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      Don't ignore the crucial step of Research & Development in
-                      the UX Design Process! Discover and solve user problems to
-                      launch a successful product. Gather data on the target
-                      audience and analyze customer feedback. Improve user
-                      experience
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-1.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>02</span>
-                      Flows
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      User Journey Map Sitemap
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      Create successful user flows for your product in the UX
-                      design process by mapping user journeys and interactions.
-                      Define product ideas and goals, tailored to user needs,
-                      behavior, and expectations. Test with real users for
-                      optimization.
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-2.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>03</span>
-                      Wireframes
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      Low - Fidelity Design
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      Define the content and functionality of your product with
-                      wireframes in the UX Design process. Brainstorm multiple
-                      ideas, get feedback, and refine for high fidelity
-                      wireframes. Enhance the user interface for a natural and
-                      intuitive look.
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-3.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>04</span>
-                      Mockups
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      High - Fidelity Design
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      Visualize your product's appearance with mockups in the UX
-                      Design. Detailed design for every screen gets reviewed by
-                      stakeholders and the design team. Get it tested with users
-                      for improved design based on their needs and expectations.
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-4.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>05</span>
-                      Prototyping
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      Interaction Design
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      UX Designers create clickable prototypes for your product
-                      using tools like Invision to assess product functionality.
-                      Gather user feedback and collaborate with development team
-                      to create improved version of the design for
-                      implementation.
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-5.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
-                  <li className="service-item relative">
-                    <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
-                      <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>06</span>
-                      Testing
-                    </h3>
-                    <h4 className="fs_18 sm_fs_16 service-tag ff_inter"
-                      style={{ marginTop: '6px', marginBottom: '16px' }}>
-                      Usability Testing
-                    </h4>
-                    <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
-                      UX designers focus on improving product usability by
-                      testing with real users. Define the testing goals and
-                      scenarios and recruit a target audience. Conduct usability
-                      tests, analyze results, and make changes for optimal user
-                      experience.
-                    </p>
-                    <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
-                      <img className="w-full h-full object-cover" width="327" height="185"
-                        src="/frontend-assets/images/home-process-mob-6.webp" alt="service"
-                        loading="lazy" decoding="async" />
-                    </div>
-                  </li>
+                  {processSteps.map((step, index) => (
+                    <li className="service-item relative" key={step.title}>
+                      <h3 className="fs_36 sm_fs_20 sm_fw_700 fw_600 service-title">
+                        <span className="hidden sm_block fs_16 fw_500" style={{ paddingRight: '6px' }}>{String(index + 1).padStart(2, '0')}</span>
+                        {step.title}
+                      </h3>
+                      <h4 className="fs_18 sm_fs_16 service-tag ff_inter" style={{ marginTop: '6px', marginBottom: '16px' }}>
+                        {step.subtitle}
+                      </h4>
+                      <p className="fs_16 sm_fs_14 sm_lh_21 lh_24 ff_inter service-desc">
+                        {step.description}
+                      </p>
+                      <div className="hidden md_block overflow-hidden" style={{ marginTop: '24px', height: '188px', borderRadius: '16px' }}>
+                        <img className="w-full h-full object-cover" width="327" height="185" src={step.mobileImage} alt="service" loading="lazy" decoding="async" />
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="image-wraper md_hidden relative behind-cursor">
@@ -743,16 +419,15 @@ export default function Home() {
           <div className="flex md-flex-wrap items-center" style={{ rowGap: '31px', columnGap: '60px' }}>
             <div className="w-full" style={{ maxWidth: '717px' }}>
               <h2 className="fs_70 sm_fs_28 sm_lh_42 lh_85 fw_700 text_white">
-                Design That Thinks. Interfaces That Feel.
+                {t('home.gradient.title')}
               </h2>
               <p className="sm_fs_16 sm_lh_25 fs_18 lh_30 ff_inter text_gray_495"
                 style={{ marginTop: '16px', marginBottom: '36px', maxWidth: '665px' }}>
-                At ZeeFrames, we craft AI-ready design systems for modern
-                software responsive, scalable, and human-centered.
+                {t('home.gradient.description')}
               </p>
               <a href="https://calendly.com/contact-zeeframes/30min?month=2025-11" target="_blank"
                 className="btn-component btn-primary btn-animate-swap w-fit overflow-hidden relative ff_inter">
-                <span className="work-us">See AI in Action</span>
+                <span className="work-us">{t('home.gradient.primary')}</span>
                 <svg className="work-us" xmlns="http://www.w3.org/2000/svg" width="21" height="20"
                   viewBox="0 0 21 20" fill="none">
                   <path d="M15.0833 5.41667L5.5 15" stroke="#0D0D0D" strokeWidth="1.5"
@@ -760,7 +435,7 @@ export default function Home() {
                   <path d="M7.16663 5H15.5V13.3333" stroke="#0D0D0D" strokeWidth="1.5"
                     strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
-                <span className="lets-talk absolute">Lets Talk</span>
+                <span className="lets-talk absolute">{t('home.gradient.secondary')}</span>
               </a>
             </div>
             <div className="flex md-justify-center md-w-full">
@@ -775,19 +450,18 @@ export default function Home() {
         <div className="container">
           <div className="flex md-flex-wrap" style={{ columnGap: '48px', rowGap: '32px' }}>
             <div className="w-full" style={{ maxWidth: '409px' }}>
-              <span className="fs_14 uppercase text_primary">FAQs</span>
+              <span className="fs_14 uppercase text_primary">{t('home.faq.eyebrow')}</span>
               <h2 className="fs_40 sm_fs_28 lh_40 fw_700 capitalize"
                 style={{ marginTop: '32px', marginBottom: '12px' }}>
-                Questions? We’ve Got Answers
+                {t('home.faq.title')}
               </h2>
               <p className="ff_inter fs_14 lh_21 text_gray_495">
-                ZeeFrames reduces design complexity & speeds up product launches with clear UX workflows,
-                scalable visual systems, and no-code execution.
+                {t('home.faq.description')}
               </p>
               <div className="flex sm-flex-wrap" style={{ gap: '32px', marginTop: '32px' }}>
                 <a href="https://calendly.com/contact-zeeframes/30min?month=2025-11" target="_blank"
                   className="btn-component btn-animate-swap btn-light overflow-hidden relative ff_inter">
-                  <span className="work-us">Book a free call</span>
+                  <span className="work-us">{t('home.faq.primary')}</span>
                   <svg className="work-us" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                     viewBox="0 0 20 20" fill="none">
                     <path d="M14.5833 5.41699L5 15.0003" stroke="#0D0D0D" strokeWidth="1.5"
@@ -795,7 +469,7 @@ export default function Home() {
                     <path d="M6.66666 5H15V13.3333" stroke="#0D0D0D" strokeWidth="1.5"
                       strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <span className="lets-talk absolute">Lets Talk</span>
+                  <span className="lets-talk absolute">{t('home.faq.secondary')}</span>
                 </a>
                 <div>
                   <img width="164" height="47" src="/frontend-assets/images/svgs/clutch-reviews.svg"
@@ -804,186 +478,29 @@ export default function Home() {
               </div>
             </div>
             <div className="accordions grow flex flex-col" style={{ gap: '16px' }}>
-              <div className="accordion active">
-                <button className="flex items-center w-full bg-transparent border-0">
-                  <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">What is UI
-                    UX
-                    design, and why
-                    is it important?</span>
-
-                  <span className="accordion-icon shrink-0 flex items-center justify-center">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
-                <div className="accordion-body">
-                  <p className="fs_16 lh_24 ff_inter text_gray_495">
-                    UX design, or user experience design, is designing digital
-                    products that are easy to use and provide a positive
-                    experience for the user. It is important because a good UX
-                    design can increase user satisfaction, engagement, and
-                    conversions.
-                  </p>
+              {faqs.map((faq, index) => (
+                <div className={'accordion' + (index === 0 ? ' active' : '')} key={faq.question}>
+                  <button className="flex items-center w-full bg-transparent border-0">
+                    <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">{faq.question}</span>
+                    <span className="accordion-icon shrink-0 flex items-center justify-center">
+                      <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </button>
+                  <div className="accordion-body">
+                    {faq.answers.map((answer, answerIndex) => (
+                      <p key={answerIndex} className="fs_16 lh_24 ff_inter text_gray_495" style={answerIndex > 0 ? { marginTop: '24px' } : undefined}>
+                        {answer}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="accordion">
-                <button className="flex items-center w-full bg-transparent border-0">
-                  <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">What is
-                    the UX
-                    design process,
-                    and how long does it
-                    take?</span>
-
-                  <span className="accordion-icon shrink-0 flex items-center justify-center">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
-                <div className="accordion-body">
-                  <p className="fs_16 lh_24 ff_inter text_gray_495">
-                    UI design, or user interface design, is the visual design of
-                    digital products, including the layout, colors, typography,
-                    and other elements. It differs from UX design, focusing more
-                    on the product's aesthetic appeal and visual aspects. In
-                    contrast, UX design focuses on the overall experience of the
-                    user.
-                  </p>
-                </div>
-              </div>
-              <div className="accordion">
-                <button className="flex items-center w-full bg-transparent border-0">
-                  <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">What types
-                    of UX
-                    design
-                    services do you offer?</span>
-
-                  <span className="accordion-icon shrink-0 flex items-center justify-center">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
-                <div className="accordion-body">
-                  <p className="fs_16 lh_24 ff_inter text_gray_495">
-                    We offer various UX design services, including UX research,
-                    wireframing, prototyping, usability testing, and graphics
-                    design. We work closely with our clients to understand their
-                    unique needs and goals and provide customized solutions to
-                    help them achieve their objectives.
-                  </p>
-                </div>
-              </div>
-              <div className="accordion">
-                <button className="flex items-center w-full bg-transparent border-0">
-                  <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">How does
-                    ZeeFrames UI UX Design
-                    differ from other design
-                    solutions?</span>
-
-                  <span className="accordion-icon shrink-0 flex items-center justify-center">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
-                <div className="accordion-body">
-                  <p className="fs_16 lh_24 ff_inter text_gray_495">
-                    At ZeeFrames, we believe in the power of Human-Computer
-                    Interaction and leverage it to make informed, data-driven
-                    design decisions that set us apart from the competition. As
-                    a leading UI UX design studio in Pakistan, we follow a
-                    design strategy that begins with discovering the needs and
-                    pain points of users and ends with real user testing for
-                    direct feedback. This approach enables us to create
-                    user-centric designs that enhance usability, accessibility,
-                    and overall user satisfaction.
-                  </p>
-                  <p className="fs_16 lh_24 ff_inter text_gray_495" style={{ marginTop: '24px' }}>
-                    Our design philosophy is simple: put users at the center of
-                    everything we do. Whether it's UX research or designing User
-                    Flows, Wireframing or Prototyping our team of expert UI UX
-                    designers ensure that your users are considered in every
-                    phase of designing to deliver outstanding results that meet
-                    the unique needs of your business.
-                  </p>
-                </div>
-              </div>
-              <div className="accordion">
-                <button className="flex items-center w-full bg-transparent border-0">
-                  <span className="grow text-start fs_16 lh_normal fw_500  text_white ff_geologica">Are there
-                    any
-                    customer reviews
-                    or case studies available
-                    for ZeeFrames UI UX Design?</span>
-
-                  <span className="accordion-icon shrink-0 flex items-center justify-center">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M8 2.66699V13.3337" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M2.66663 8H13.3333" stroke="#6D6D6D" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <svg className="minus-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                      viewBox="0 0 16 16" fill="none">
-                      <path d="M2.66663 8H13.3333" stroke="#515050" strokeWidth="1.5"
-                        strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                </button>
-                <div className="accordion-body">
-                  <p className="fs_16 lh_24 ff_inter text_gray_495">
-                    At ZeeFrames, we take pride in our customer reviews and case
-                    studies that showcase our expertise in the UI UX design
-                    industry. You can easily access them on our website to get a
-                    glimpse of our work and the impact it has had on our
-                    clients' businesses. As a top-class UI UX design firm, we
-                    have worked with a diverse range of clients worldwide,
-                    helping them create engaging and intuitive digital
-                    experiences for their customers. With our expertise and
-                    user-centered design approach, you can be rest assured as we
-                    will take your website design to the next level.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -992,44 +509,24 @@ export default function Home() {
         <div className="container">
           <div className="flex md-flex-wrap" style={{ rowGap: '32px', columnGap: '64px' }}>
             <div className="w-full" style={{ maxWidth: '636px' }}>
-              <span className="fs_14 uppercase text_primary">Contact us</span>
+              <span className="fs_14 uppercase text_primary">{t('common.contact.eyebrow')}</span>
               <h2 className="fs_40 sm_fs_28 lh_40 fw_700 capitalize"
                 style={{ marginTop: '32px', marginBottom: '12px', maxWidth: '510px' }}>
-                Let’s Build Something You’ll Be Proud Of
+                {t('common.contact.title')}
               </h2>
 
               <p className="ff_inter fs_14 lh_21 text_gray_495" style={{ maxWidth: '534px' }}>
-                Have a project in mind? Whether you need a full UI/UX redesign, a new digital product, or a
-                stronger online presence, our team is ready to help turn your ideas into reality.
+                {t('common.contact.description')}
               </p>
               <ul className="mt-32 list-unstyled flex flex-col" style={{ gap: '12px' }}>
-                <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
-                  <svg className="shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="21"
-                    viewBox="0 0 20 21" fill="none">
-                    <path fillRule="evenodd" clipRule="evenodd"
-                      d="M10.0013 1.54102C5.0538 1.54102 1.04297 5.55185 1.04297 10.4993C1.04297 15.4468 5.0538 19.4577 10.0013 19.4577C14.9488 19.4577 18.9596 15.4468 18.9596 10.4993C18.9596 5.55185 14.9488 1.54102 10.0013 1.54102ZM6.2763 10.4743C6.15782 10.3639 6.00112 10.3038 5.8392 10.3067C5.67728 10.3096 5.52279 10.3752 5.40828 10.4897C5.29377 10.6042 5.22818 10.7587 5.22532 10.9206C5.22247 11.0825 5.28257 11.2392 5.39297 11.3577L7.89297 13.8577C8.01016 13.9747 8.16901 14.0405 8.33464 14.0405C8.50026 14.0405 8.65911 13.9747 8.7763 13.8577L14.6096 8.02435C14.72 7.90587 14.7801 7.74916 14.7773 7.58725C14.7744 7.42533 14.7088 7.27084 14.5943 7.15633C14.4798 7.04182 14.3253 6.97623 14.1634 6.97337C14.0015 6.97051 13.8448 7.03062 13.7263 7.14102L8.33464 12.5327L6.2763 10.4743Z"
-                      fill="#BDBDBD" />
-                  </svg>
-                  You’ll hear from us within one business day.
-                </li>
-                <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
-                  <svg className="shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="21"
-                    viewBox="0 0 20 21" fill="none">
-                    <path fillRule="evenodd" clipRule="evenodd"
-                      d="M10.0013 1.54102C5.0538 1.54102 1.04297 5.55185 1.04297 10.4993C1.04297 15.4468 5.0538 19.4577 10.0013 19.4577C14.9488 19.4577 18.9596 15.4468 18.9596 10.4993C18.9596 5.55185 14.9488 1.54102 10.0013 1.54102ZM6.2763 10.4743C6.15782 10.3639 6.00112 10.3038 5.8392 10.3067C5.67728 10.3096 5.52279 10.3752 5.40828 10.4897C5.29377 10.6042 5.22818 10.7587 5.22532 10.9206C5.22247 11.0825 5.28257 11.2392 5.39297 11.3577L7.89297 13.8577C8.01016 13.9747 8.16901 14.0405 8.33464 14.0405C8.50026 14.0405 8.65911 13.9747 8.7763 13.8577L14.6096 8.02435C14.72 7.90587 14.7801 7.74916 14.7773 7.58725C14.7744 7.42533 14.7088 7.27084 14.5943 7.15633C14.4798 7.04182 14.3253 6.97623 14.1634 6.97337C14.0015 6.97051 13.8448 7.03062 13.7263 7.14102L8.33464 12.5327L6.2763 10.4743Z"
-                      fill="#BDBDBD" />
-                  </svg>
-                  We’ll understand your goals and gather the right project details.
-                </li>
-                <li className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
-                  <svg className="shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="21"
-                    viewBox="0 0 20 21" fill="none">
-                    <path fillRule="evenodd" clipRule="evenodd"
-                      d="M10.0013 1.54102C5.0538 1.54102 1.04297 5.55185 1.04297 10.4993C1.04297 15.4468 5.0538 19.4577 10.0013 19.4577C14.9488 19.4577 18.9596 15.4468 18.9596 10.4993C18.9596 5.55185 14.9488 1.54102 10.0013 1.54102ZM6.2763 10.4743C6.15782 10.3639 6.00112 10.3038 5.8392 10.3067C5.67728 10.3096 5.52279 10.3752 5.40828 10.4897C5.29377 10.6042 5.22818 10.7587 5.22532 10.9206C5.22247 11.0825 5.28257 11.2392 5.39297 11.3577L7.89297 13.8577C8.01016 13.9747 8.16901 14.0405 8.33464 14.0405C8.50026 14.0405 8.65911 13.9747 8.7763 13.8577L14.6096 8.02435C14.72 7.90587 14.7801 7.74916 14.7773 7.58725C14.7744 7.42533 14.7088 7.27084 14.5943 7.15633C14.4798 7.04182 14.3253 6.97623 14.1634 6.97337C14.0015 6.97051 13.8448 7.03062 13.7263 7.14102L8.33464 12.5327L6.2763 10.4743Z"
-                      fill="#BDBDBD" />
-                  </svg>
-                  You’ll receive a clear proposal with timeline, scope, and pricing.
-                </li>
+                {contactPoints.map((point, index) => (
+                  <li key={index} className="flex items-center fs_14 lh_21 ff_inter text_gray_495" style={{ gap: '8px' }}>
+                    <svg className="shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M10.0013 1.54102C5.0538 1.54102 1.04297 5.55185 1.04297 10.4993C1.04297 15.4468 5.0538 19.4577 10.0013 19.4577C14.9488 19.4577 18.9596 15.4468 18.9596 10.4993C18.9596 5.55185 14.9488 1.54102 10.0013 1.54102ZM6.2763 10.4743C6.15782 10.3639 6.00112 10.3038 5.8392 10.3067C5.67728 10.3096 5.52279 10.3752 5.40828 10.4897C5.29377 10.6042 5.22818 10.7587 5.22532 10.9206C5.22247 11.0825 5.28257 11.2392 5.39297 11.3577L7.89297 13.8577C8.01016 13.9747 8.16901 14.0405 8.33464 14.0405C8.50026 14.0405 8.65911 13.9747 8.7763 13.8577L14.6096 8.02435C14.72 7.90587 14.7801 7.74916 14.7773 7.58725C14.7744 7.42533 14.7088 7.27084 14.5943 7.15633C14.4798 7.04182 14.3253 6.97623 14.1634 6.97337C14.0015 6.97051 13.8448 7.03062 13.7263 7.14102L8.33464 12.5327L6.2763 10.4743Z" fill="#BDBDBD" />
+                    </svg>
+                    {point}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="grow form-wraper">
@@ -1038,250 +535,33 @@ export default function Home() {
                 <div>
                   <input
                     className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140 relative behind-cursor"
-                    type="text" name="full_name" id="fullName" placeholder="Full Name*" required />
+                    type="text" name="full_name" id="fullName" placeholder={t('common.form.fullName')} required />
                 </div>
                 <div>
                   <input
                     className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140 relative behind-cursor"
-                    type="email" name="email" id="email" placeholder="Email Address*" required />
+                    type="email" name="email" id="email" placeholder={t('common.form.email')} required />
                 </div>
                 <div className="relative">
                   <input
                     className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140 relative behind-cursor"
-                    type="tel" name="phone" id="phone" placeholder="Phone Number*" required />
-                </div>
-                <div className="relative" id="countryWrapper">
-                  <input type="hidden" name="country" id="countryValue" />
-                  <input
-                    className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140 relative behind-cursor"
-                    type="text" id="countryTrigger" placeholder="Country (Optional)" autoComplete="off"
-                    readOnly style={{ cursor: 'pointer' }} />
-                  <svg id="countryChevron"
-                    style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', transition: 'transform .2s' }}
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                    fill="none" stroke="#8F8F8F" strokeWidth="2" strokeLinecap="round"
-                    strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                  <div id="countryDropdownPanel"
-                    style={{ display: 'none', position: 'absolute', top: 'calc(100% + 4px)', left: '0', width: '100%', zIndex: '999', borderRadius: '8px', border: '1px solid #373737', background: '#171717', overflow: 'hidden' }}>
-                    <div style={{ padding: '8px' }}>
-                      <input type="text" id="countrySearch"
-                        className="input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140"
-                        placeholder="Search country..." autoComplete="off"
-                        style={{ padding: '8px 12px' }} />
-                    </div>
-                    <ul id="countryDropdown"
-                      style={{ listStyle: 'none', margin: '0', padding: '0 4px 4px', maxHeight: '200px', overflowY: 'auto' }}>
-                      <li data-value="AF">Afghanistan</li>
-                      <li data-value="AL">Albania</li>
-                      <li data-value="DZ">Algeria</li>
-                      <li data-value="AD">Andorra</li>
-                      <li data-value="AO">Angola</li>
-                      <li data-value="AG">Antigua and Barbuda</li>
-                      <li data-value="AR">Argentina</li>
-                      <li data-value="AM">Armenia</li>
-                      <li data-value="AU">Australia</li>
-                      <li data-value="AT">Austria</li>
-                      <li data-value="AZ">Azerbaijan</li>
-                      <li data-value="BS">Bahamas</li>
-                      <li data-value="BH">Bahrain</li>
-                      <li data-value="BD">Bangladesh</li>
-                      <li data-value="BB">Barbados</li>
-                      <li data-value="BY">Belarus</li>
-                      <li data-value="BE">Belgium</li>
-                      <li data-value="BZ">Belize</li>
-                      <li data-value="BJ">Benin</li>
-                      <li data-value="BT">Bhutan</li>
-                      <li data-value="BO">Bolivia</li>
-                      <li data-value="BA">Bosnia and Herzegovina</li>
-                      <li data-value="BW">Botswana</li>
-                      <li data-value="BR">Brazil</li>
-                      <li data-value="BN">Brunei</li>
-                      <li data-value="BG">Bulgaria</li>
-                      <li data-value="BF">Burkina Faso</li>
-                      <li data-value="BI">Burundi</li>
-                      <li data-value="CV">Cabo Verde</li>
-                      <li data-value="KH">Cambodia</li>
-                      <li data-value="CM">Cameroon</li>
-                      <li data-value="CA">Canada</li>
-                      <li data-value="CF">Central African Republic</li>
-                      <li data-value="TD">Chad</li>
-                      <li data-value="CL">Chile</li>
-                      <li data-value="CN">China</li>
-                      <li data-value="CO">Colombia</li>
-                      <li data-value="KM">Comoros</li>
-                      <li data-value="CG">Congo</li>
-                      <li data-value="CD">Congo (DRC)</li>
-                      <li data-value="CR">Costa Rica</li>
-                      <li data-value="CI">Côte d'Ivoire</li>
-                      <li data-value="HR">Croatia</li>
-                      <li data-value="CU">Cuba</li>
-                      <li data-value="CY">Cyprus</li>
-                      <li data-value="CZ">Czech Republic</li>
-                      <li data-value="DK">Denmark</li>
-                      <li data-value="DJ">Djibouti</li>
-                      <li data-value="DM">Dominica</li>
-                      <li data-value="DO">Dominican Republic</li>
-                      <li data-value="EC">Ecuador</li>
-                      <li data-value="EG">Egypt</li>
-                      <li data-value="SV">El Salvador</li>
-                      <li data-value="GQ">Equatorial Guinea</li>
-                      <li data-value="ER">Eritrea</li>
-                      <li data-value="EE">Estonia</li>
-                      <li data-value="SZ">Eswatini</li>
-                      <li data-value="ET">Ethiopia</li>
-                      <li data-value="FJ">Fiji</li>
-                      <li data-value="FI">Finland</li>
-                      <li data-value="FR">France</li>
-                      <li data-value="GA">Gabon</li>
-                      <li data-value="GM">Gambia</li>
-                      <li data-value="GE">Georgia</li>
-                      <li data-value="DE">Germany</li>
-                      <li data-value="GH">Ghana</li>
-                      <li data-value="GR">Greece</li>
-                      <li data-value="GD">Grenada</li>
-                      <li data-value="GT">Guatemala</li>
-                      <li data-value="GN">Guinea</li>
-                      <li data-value="GW">Guinea-Bissau</li>
-                      <li data-value="GY">Guyana</li>
-                      <li data-value="HT">Haiti</li>
-                      <li data-value="HN">Honduras</li>
-                      <li data-value="HU">Hungary</li>
-                      <li data-value="IS">Iceland</li>
-                      <li data-value="IN">India</li>
-                      <li data-value="ID">Indonesia</li>
-                      <li data-value="IR">Iran</li>
-                      <li data-value="IQ">Iraq</li>
-                      <li data-value="IE">Ireland</li>
-                      <li data-value="IL">Israel</li>
-                      <li data-value="IT">Italy</li>
-                      <li data-value="JM">Jamaica</li>
-                      <li data-value="JP">Japan</li>
-                      <li data-value="JO">Jordan</li>
-                      <li data-value="KZ">Kazakhstan</li>
-                      <li data-value="KE">Kenya</li>
-                      <li data-value="KI">Kiribati</li>
-                      <li data-value="KW">Kuwait</li>
-                      <li data-value="KG">Kyrgyzstan</li>
-                      <li data-value="LA">Laos</li>
-                      <li data-value="LV">Latvia</li>
-                      <li data-value="LB">Lebanon</li>
-                      <li data-value="LS">Lesotho</li>
-                      <li data-value="LR">Liberia</li>
-                      <li data-value="LY">Libya</li>
-                      <li data-value="LI">Liechtenstein</li>
-                      <li data-value="LT">Lithuania</li>
-                      <li data-value="LU">Luxembourg</li>
-                      <li data-value="MG">Madagascar</li>
-                      <li data-value="MW">Malawi</li>
-                      <li data-value="MY">Malaysia</li>
-                      <li data-value="MV">Maldives</li>
-                      <li data-value="ML">Mali</li>
-                      <li data-value="MT">Malta</li>
-                      <li data-value="MH">Marshall Islands</li>
-                      <li data-value="MR">Mauritania</li>
-                      <li data-value="MU">Mauritius</li>
-                      <li data-value="MX">Mexico</li>
-                      <li data-value="FM">Micronesia</li>
-                      <li data-value="MD">Moldova</li>
-                      <li data-value="MC">Monaco</li>
-                      <li data-value="MN">Mongolia</li>
-                      <li data-value="ME">Montenegro</li>
-                      <li data-value="MA">Morocco</li>
-                      <li data-value="MZ">Mozambique</li>
-                      <li data-value="MM">Myanmar</li>
-                      <li data-value="NA">Namibia</li>
-                      <li data-value="NR">Nauru</li>
-                      <li data-value="NP">Nepal</li>
-                      <li data-value="NL">Netherlands</li>
-                      <li data-value="NZ">New Zealand</li>
-                      <li data-value="NI">Nicaragua</li>
-                      <li data-value="NE">Niger</li>
-                      <li data-value="NG">Nigeria</li>
-                      <li data-value="NO">Norway</li>
-                      <li data-value="OM">Oman</li>
-                      <li data-value="PK">Pakistan</li>
-                      <li data-value="PW">Palau</li>
-                      <li data-value="PA">Panama</li>
-                      <li data-value="PG">Papua New Guinea</li>
-                      <li data-value="PY">Paraguay</li>
-                      <li data-value="PE">Peru</li>
-                      <li data-value="PH">Philippines</li>
-                      <li data-value="PL">Poland</li>
-                      <li data-value="PT">Portugal</li>
-                      <li data-value="QA">Qatar</li>
-                      <li data-value="RO">Romania</li>
-                      <li data-value="RU">Russia</li>
-                      <li data-value="RW">Rwanda</li>
-                      <li data-value="KN">Saint Kitts and Nevis</li>
-                      <li data-value="LC">Saint Lucia</li>
-                      <li data-value="VC">Saint Vincent and the Grenadines</li>
-                      <li data-value="WS">Samoa</li>
-                      <li data-value="SM">San Marino</li>
-                      <li data-value="ST">Sao Tome and Principe</li>
-                      <li data-value="SA">Saudi Arabia</li>
-                      <li data-value="SN">Senegal</li>
-                      <li data-value="RS">Serbia</li>
-                      <li data-value="SC">Seychelles</li>
-                      <li data-value="SL">Sierra Leone</li>
-                      <li data-value="SG">Singapore</li>
-                      <li data-value="SK">Slovakia</li>
-                      <li data-value="SI">Slovenia</li>
-                      <li data-value="SB">Solomon Islands</li>
-                      <li data-value="SO">Somalia</li>
-                      <li data-value="ZA">South Africa</li>
-                      <li data-value="SS">South Sudan</li>
-                      <li data-value="ES">Spain</li>
-                      <li data-value="LK">Sri Lanka</li>
-                      <li data-value="SD">Sudan</li>
-                      <li data-value="SR">Suriname</li>
-                      <li data-value="SE">Sweden</li>
-                      <li data-value="CH">Switzerland</li>
-                      <li data-value="SY">Syria</li>
-                      <li data-value="TW">Taiwan</li>
-                      <li data-value="TJ">Tajikistan</li>
-                      <li data-value="TZ">Tanzania</li>
-                      <li data-value="TH">Thailand</li>
-                      <li data-value="TL">Timor-Leste</li>
-                      <li data-value="TG">Togo</li>
-                      <li data-value="TO">Tonga</li>
-                      <li data-value="TT">Trinidad and Tobago</li>
-                      <li data-value="TN">Tunisia</li>
-                      <li data-value="TR">Turkey</li>
-                      <li data-value="TM">Turkmenistan</li>
-                      <li data-value="TV">Tuvalu</li>
-                      <li data-value="UG">Uganda</li>
-                      <li data-value="UA">Ukraine</li>
-                      <li data-value="AE">United Arab Emirates</li>
-                      <li data-value="GB">United Kingdom</li>
-                      <li data-value="US">United States</li>
-                      <li data-value="UY">Uruguay</li>
-                      <li data-value="UZ">Uzbekistan</li>
-                      <li data-value="VU">Vanuatu</li>
-                      <li data-value="VE">Venezuela</li>
-                      <li data-value="VN">Vietnam</li>
-                      <li data-value="YE">Yemen</li>
-                      <li data-value="ZM">Zambia</li>
-                      <li data-value="ZW">Zimbabwe</li>
-                    </ul>
-                  </div>
+                    type="tel" name="phone" id="phone" placeholder={t('common.form.phone')} required />
                 </div>
                 <div>
                   <textarea className="textarea input w-full fs_14 lh_normal fw_500 ff_inter text_gray_140"
                     name="about_project" id="aboutProject"
-                    placeholder="Tell us about your project, goals, timeline, or requirements*"
+                    placeholder={t('common.form.project')}
                     required></textarea>
                 </div>
                 <button type="submit"
                   className="btn-component btn-outlined-primary ff_inter relative behind-cursor"
                   style={{ marginTop: '4px' }}>
-                  Submit Inquiry
+                  {t('common.form.submit')}
                 </button>
               </form>
               <div style={{ marginTop: '32px' }}>
                 <p className="fs_14 lh_normal ff_inter text_gray_350">
-                  Prefer email instead? Feel free to contact us directly.
+                  {t('common.form.preferEmail')}
                 </p>
                 <div className="flex items-center sm-flex-wrap"
                   style={{ marginTop: '12px', columnGap: '16px', rowGap: '12px' }}>
@@ -1303,7 +583,7 @@ export default function Home() {
       </section>
 
       <div className="floating_btn flex flex-col items-center justify-center">
-        <a target="_blank" rel="noreferrer" href="https://wa.me/+923203244280" aria-label="Chat with us on WhatsApp">
+        <a target="_blank" rel="noreferrer" href="https://wa.me/+923203244280" aria-label={t('home.whatsAppLabel')}>
           <div className="contact_icon flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
               <g clipPath="url(#clip0_1_4014)">

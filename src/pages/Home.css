@@ -738,6 +738,20 @@ body {
     left: 0px
 }
 
+[dir="rtl"] .star-wrapper {
+    left: auto;
+    right: 0px
+}
+
+[dir="rtl"] .no-code {
+    rotate: -7deg;
+    left: -5%;
+    right:auto;
+    bottom:50%;
+
+
+}
+
 .trusted-partners-wraper {
     padding-top: 88px
 }
@@ -916,6 +930,11 @@ body {
     .star-wrapper {
         top: 56%;
         left: -16px;
+    }
+
+    [dir="rtl"] .star-wrapper {
+        left: auto;
+        right: -16px;
     }
 
     .star-wrapper img {
