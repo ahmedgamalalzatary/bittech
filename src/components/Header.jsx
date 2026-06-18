@@ -38,16 +38,10 @@ export default function Header() {
             <li>
               <NavLink to="/work" className={navClass} onClick={() => setMenuShown(false)}>{t('common.nav.work')}</NavLink>
             </li>
-            <li className="hidden lg_block" style={{ width: '100%' }}>
-              <LanguageSwitcher
-                className="nav-link fs_18 lh_27 ff_inter text_white"
-                onClick={() => setMenuShown(false)}
-              />
-            </li>
           </ul>
           <div className="flex items-center" style={{ gap: '12px' }}>
             <LanguageSwitcher
-              className="nav-link fs_18 lh_27 ff_inter text_white sm-hidden"
+              className="nav-link fs_18 lh_27 ff_inter text_white md-hidden"
             />
             <button className="theme-toggler relative hidden" id="theme-toggler" aria-label="Toggle theme">
               <div className="theme-icon flex items-center justify-center">

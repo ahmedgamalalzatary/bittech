@@ -94,8 +94,9 @@
 }
 
 [dir="rtl"] .service-item::before {
-  top: -30px;
-  left: auto;
+    right: -10%;
+    left: auto;
+    top: 5px;
 }
 
 .service-item.active::before,

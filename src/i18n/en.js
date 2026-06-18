@@ -1,6 +1,6 @@
 const en = {
   common: {
-    langSwitch: 'AR',
+    langSwitch: 'العربيه',
     nav: {
       home: 'Home',
       about: 'About',

@@ -736,6 +736,9 @@ button {
   .mobile-menu .nav-link {
     padding: 8px 16px;
   }
+  .md-hidden {
+    display: none;
+  }
 }
 @media (max-width: 768px) {
   .md_hidden {

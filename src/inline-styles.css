@@ -896,6 +896,12 @@
             }
         }
 
+        @media (max-width:990px) {
+            .lang-switch-desktop {
+                display: none
+            }
+        }
+
         @media (max-width:495px) {
             .star-wrapper {
                 top: 66%

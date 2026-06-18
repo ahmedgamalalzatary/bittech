@@ -1,6 +1,6 @@
 const ar = {
   common: {
-    langSwitch: 'EN',
+    langSwitch: 'English',
     nav: {
       home: 'الرئيسية',
       about: 'من نحن',
