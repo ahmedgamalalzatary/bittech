@@ -983,3 +983,50 @@
                 min-width: 170px
             }
         }
+
+/* ============================================================================
+   Header cohesion pass for the "Blueprint" redesign. Global so About/Work stay
+   visually consistent, but only restyles the existing header markup.
+   ========================================================================== */
+.header {
+    background-color: rgba(8, 8, 8, 0.72);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header .nav-link {
+    position: relative;
+    font-family: "Space Mono", ui-monospace, monospace !important;
+    font-size: 12px !important;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    transition: color .3s ease;
+}
+
+.header .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 2px;
+    height: 1.5px;
+    background: #f3fe00;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s cubic-bezier(.65, .05, .36, 1);
+}
+
+.header .nav-link:hover {
+    color: #ffffff;
+}
+
+.header .nav-link:hover::after,
+.header .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+.header .nav-link.active {
+    color: #f3fe00;
+}
