@@ -1,411 +1,567 @@
-import emailjs from '@emailjs/browser'
 import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import './HomeRedesign.css'
-
-// Only home-process-1.webp exists at full size; the mobile set exists for all
-// six steps, so the sticky frame (object-fit: cover) uses those.
-const PROCESS_IMAGES = [
-  '/frontend-assets/images/home-process-mob-1.webp',
-  '/frontend-assets/images/home-process-mob-2.webp',
-  '/frontend-assets/images/home-process-mob-3.webp',
-  '/frontend-assets/images/home-process-mob-4.webp',
-  '/frontend-assets/images/home-process-mob-5.webp',
-  '/frontend-assets/images/home-process-mob-6.webp',
-]
-
-const PARTNERS = [
-  ['/frontend-assets/biscofa.png', 'Biscofa'],
-  ['/frontend-assets/elgawhra.png', 'Elgawhra'],
-  ['/frontend-assets/capella.png', 'Capella'],
-  ['/frontend-assets/capella2.png', 'Capella App'],
-]
-
-const ArrowOut = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-    <path d="M14.5833 5.41663L5 15" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M6.66663 5H15V13.3333" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
+import emailjs from '@emailjs/browser'
+import { ArrowUpRight, CheckCircle } from '../components/icons.jsx'
+import {
+  SERVICES, PROJECTS, STEPS, VALUES, INDUSTRIES, MARQUEE, ROTATOR,
+} from './atelier-data.js'
 
 export default function Home() {
-  const { t } = useTranslation()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
-  const [activeStep, setActiveStep] = useState(0)
-  const [openFaq, setOpenFaq] = useState(0)
-  const rootRef = useRef(null)
+  const heroRef = useRef(null)
+  const loaderRef = useRef(null)
+  const barRef = useRef(null)
+  const pctRef = useRef(null)
+  const progressRef = useRef(null)
+  const cursorRef = useRef(null)
+  const cursorDotRef = useRef(null)
+  const canvasRef = useRef(null)
+  const spineRef = useRef(null)
+  const timelineRef = useRef(null)
 
-  const contactPoints = t('common.contact.points', { returnObjects: true })
-  const services = t('home.services.items', { returnObjects: true })
-  const showcaseProjects = t('home.showcase.projects', { returnObjects: true })
-  const processSteps = t('home.process.steps', { returnObjects: true })
-  const faqs = t('home.faq.items', { returnObjects: true })
+  const [activeSvc, setActiveSvc] = useState(0)
+  const [rotIdx, setRotIdx] = useState(0)
 
   const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
   const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
   const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  const [submitting, setSubmitting] = useState(false)
+  const [status, setStatus] = useState({ type: '', message: '' })
 
-  // Scroll-reveal: fade elements in as they enter the viewport.
+  // hero word rotator
   useEffect(() => {
-    const root = rootRef.current
-    if (!root) return
-    const targets = root.querySelectorAll('.rx-fade, .rx-reveal')
-    if (!('IntersectionObserver' in window)) {
-      targets.forEach((el) => el.classList.add('is-in'))
-      return
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-in')
-            io.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
-    )
-    targets.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+    const id = setInterval(() => setRotIdx((i) => (i + 1) % ROTATOR.length), 1900)
+    return () => clearInterval(id)
   }, [])
 
-  // Process: track which step is centered, drive the sticky image.
+  // master interactivity effect
   useEffect(() => {
-    const root = rootRef.current
-    if (!root) return
-    const steps = Array.from(root.querySelectorAll('.rx-step'))
-    if (!steps.length) return
-    let pending = false
-    const onScroll = () => {
-      if (pending) return
-      pending = true
-      requestAnimationFrame(() => {
-        const mid = window.innerHeight * 0.5
-        let best = 0
-        let bestDist = Infinity
-        steps.forEach((step, i) => {
-          const r = step.getBoundingClientRect()
-          const c = r.top + r.height / 2
-          const d = Math.abs(c - mid)
-          if (r.bottom > 0 && r.top < window.innerHeight && d < bestDist) {
-            bestDist = d
-            best = i
-          }
-        })
-        setActiveStep(best)
-        pending = false
+    const html = document.documentElement
+    html.classList.add('js')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const fine = window.matchMedia('(pointer:fine)').matches
+    const cleanups = []
+
+    /* -------- loader -------- */
+    const finishLoad = () => {
+      heroRef.current && heroRef.current.classList.add('ready')
+      loaderRef.current && loaderRef.current.classList.add('done')
+    }
+    if (reduce) {
+      if (barRef.current) barRef.current.style.transform = 'scaleX(1)'
+      if (pctRef.current) pctRef.current.textContent = '100%'
+      finishLoad()
+    } else {
+      let p = 0
+      const tick = setInterval(() => {
+        p += Math.random() * 16 + 6
+        if (p >= 100) { p = 100; clearInterval(tick); setTimeout(finishLoad, 260) }
+        if (barRef.current) barRef.current.style.transform = 'scaleX(' + (p / 100) + ')'
+        if (pctRef.current) pctRef.current.textContent = Math.floor(p) + '%'
+      }, 130)
+      cleanups.push(() => clearInterval(tick))
+      const safety = setTimeout(() => {
+        if (loaderRef.current && !loaderRef.current.classList.contains('done')) finishLoad()
+      }, 2600)
+      cleanups.push(() => clearTimeout(safety))
+    }
+
+    /* -------- custom cursor -------- */
+    if (fine && !reduce) {
+      const cur = cursorRef.current
+      const dot = cursorDotRef.current
+      let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy
+      const onMove = (e) => {
+        tx = e.clientX; ty = e.clientY
+        if (dot) dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)'
+        html.style.setProperty('--mx', tx + 'px')
+        html.style.setProperty('--my', ty + 'px')
+      }
+      document.addEventListener('mousemove', onMove)
+      cleanups.push(() => document.removeEventListener('mousemove', onMove))
+      let raf
+      const loop = () => {
+        cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18
+        if (cur) cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'
+        raf = requestAnimationFrame(loop)
+      }
+      loop()
+      cleanups.push(() => cancelAnimationFrame(raf))
+      const down = () => cur && cur.classList.add('is-down')
+      const up = () => cur && cur.classList.remove('is-down')
+      document.addEventListener('mousedown', down)
+      document.addEventListener('mouseup', up)
+      cleanups.push(() => { document.removeEventListener('mousedown', down); document.removeEventListener('mouseup', up) })
+      const hov = 'a,button,input,textarea,.svc,.proj,.ind,.val,[data-magnetic]'
+      const enter = () => cur && cur.classList.add('is-hover')
+      const leave = () => cur && cur.classList.remove('is-hover')
+      const hovEls = Array.from(document.querySelectorAll(hov))
+      hovEls.forEach((el) => { el.addEventListener('mouseenter', enter); el.addEventListener('mouseleave', leave) })
+      cleanups.push(() => hovEls.forEach((el) => { el.removeEventListener('mouseenter', enter); el.removeEventListener('mouseleave', leave) }))
+    }
+
+    /* -------- magnetic buttons -------- */
+    if (fine && !reduce) {
+      const magEls = Array.from(document.querySelectorAll('[data-magnetic]'))
+      const handlers = []
+      magEls.forEach((el) => {
+        const move = (e) => {
+          const r = el.getBoundingClientRect()
+          const mx = e.clientX - r.left - r.width / 2
+          const my = e.clientY - r.top - r.height / 2
+          el.style.transform = 'translate(' + (mx * 0.28) + 'px,' + (my * 0.42) + 'px)'
+        }
+        const out = () => { el.style.transform = '' }
+        el.addEventListener('mousemove', move)
+        el.addEventListener('mouseleave', out)
+        handlers.push([el, move, out])
       })
+      cleanups.push(() => handlers.forEach(([el, move, out]) => { el.removeEventListener('mousemove', move); el.removeEventListener('mouseleave', out) }))
+    }
+
+    /* -------- scroll progress + process spine -------- */
+    const steps = Array.from(document.querySelectorAll('.step'))
+    const drawSpine = () => {
+      const timeline = timelineRef.current
+      if (!timeline) return
+      const r = timeline.getBoundingClientRect()
+      const trigger = innerHeight * 0.55
+      const total = r.height
+      const filled = Math.min(Math.max(trigger - r.top, 0), total)
+      const ratio = total > 0 ? filled / total : 0
+      if (spineRef.current) spineRef.current.style.height = (ratio * 100) + '%'
+      steps.forEach((st) => {
+        const node = st.querySelector('.node')
+        if (node) st.classList.toggle('lit', node.getBoundingClientRect().top < trigger)
+      })
+    }
+    const onScroll = () => {
+      const y = window.scrollY || window.pageYOffset
+      const h = document.documentElement.scrollHeight - innerHeight
+      if (progressRef.current) progressRef.current.style.width = (h > 0 ? (y / h * 100) : 0) + '%'
+      drawSpine()
     }
     window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [processSteps.length])
+    cleanups.push(() => window.removeEventListener('scroll', onScroll))
 
-  const handleContactSubmit = async (event) => {
-    event.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus({ type: '', message: '' })
-    const form = event.currentTarget
-    try {
-      await emailjs.sendForm(emailJsServiceId, emailJsTemplateId, form, {
-        publicKey: emailJsPublicKey,
-      })
-      form.reset()
-      setSubmitStatus({ type: 'success', message: '✓ Inquiry transmitted. We reply within one business day.' })
-    } catch (error) {
-      setSubmitStatus({ type: 'error', message: '✗ Transmission failed. Please retry or email us directly.' })
-    } finally {
-      setIsSubmitting(false)
+    /* -------- reveal on scroll -------- */
+    const revealEls = Array.from(document.querySelectorAll('.reveal'))
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => {
+        es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target) } })
+      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' })
+      revealEls.forEach((el) => io.observe(el))
+      cleanups.push(() => io.disconnect())
+    } else {
+      revealEls.forEach((el) => el.classList.add('in'))
     }
+
+    /* -------- count up -------- */
+    const countUp = (el) => {
+      const target = parseFloat(el.getAttribute('data-target'))
+      const dec = parseInt(el.getAttribute('data-dec') || '0', 10)
+      const dur = 1700
+      let t0 = null
+      const step = (ts) => {
+        if (!t0) t0 = ts
+        const pr = Math.min((ts - t0) / dur, 1)
+        const eased = 1 - Math.pow(1 - pr, 3)
+        const val = target * eased
+        el.textContent = dec ? val.toFixed(dec) : Math.floor(val).toLocaleString()
+        if (pr < 1) requestAnimationFrame(step)
+        else el.textContent = dec ? target.toFixed(dec) : target.toLocaleString()
+      }
+      requestAnimationFrame(step)
+    }
+    const counters = Array.from(document.querySelectorAll('.count'))
+    if ('IntersectionObserver' in window) {
+      const io2 = new IntersectionObserver((es) => {
+        es.forEach((en) => { if (en.isIntersecting) { countUp(en.target); io2.unobserve(en.target) } })
+      }, { threshold: 0.6 })
+      counters.forEach((el) => io2.observe(el))
+      cleanups.push(() => io2.disconnect())
+    } else {
+      counters.forEach(countUp)
+    }
+
+    /* -------- HERO node network canvas -------- */
+    const canvas = canvasRef.current
+    if (canvas && !reduce) {
+      const ctx = canvas.getContext('2d')
+      let w, h, dpr, nodes = []
+      const mouse = { x: -999, y: -999 }
+      const build = () => {
+        const count = Math.round(Math.min(86, Math.max(34, (w * h) / 16000)))
+        nodes = []
+        for (let i = 0; i < count; i++) {
+          nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28, r: Math.random() * 1.6 + 0.6 })
+        }
+      }
+      const size = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2)
+        w = canvas.clientWidth; h = canvas.clientHeight
+        canvas.width = w * dpr; canvas.height = h * dpr
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        build()
+      }
+      const heroEl = canvas.parentElement
+      const onHeroMove = (e) => { const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top }
+      const onHeroLeave = () => { mouse.x = -999; mouse.y = -999 }
+      heroEl.addEventListener('mousemove', onHeroMove)
+      heroEl.addEventListener('mouseleave', onHeroLeave)
+      const DIST = 132
+      let raf
+      const frame = () => {
+        ctx.clearRect(0, 0, w, h)
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i]
+          n.x += n.vx; n.y += n.vy
+          if (n.x < 0 || n.x > w) n.vx *= -1
+          if (n.y < 0 || n.y > h) n.vy *= -1
+          const mdx = mouse.x - n.x, mdy = mouse.y - n.y, md = Math.sqrt(mdx * mdx + mdy * mdy)
+          if (md < 160) { n.x += mdx * 0.012; n.y += mdy * 0.012 }
+          for (let j = i + 1; j < nodes.length; j++) {
+            const m = nodes[j], dx = n.x - m.x, dy = n.y - m.y, d = Math.sqrt(dx * dx + dy * dy)
+            if (d < DIST) {
+              const a = (1 - d / DIST)
+              ctx.strokeStyle = 'rgba(245,197,24,' + (a * 0.22) + ')'
+              ctx.lineWidth = 0.6
+              ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke()
+            }
+          }
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.2832)
+          ctx.fillStyle = md < 160 ? 'rgba(255,216,58,0.95)' : 'rgba(245,197,24,0.42)'
+          ctx.fill()
+        }
+        raf = requestAnimationFrame(frame)
+      }
+      size(); frame()
+      let rt
+      const onResize = () => { clearTimeout(rt); rt = setTimeout(size, 200) }
+      window.addEventListener('resize', onResize)
+      cleanups.push(() => {
+        cancelAnimationFrame(raf)
+        window.removeEventListener('resize', onResize)
+        heroEl.removeEventListener('mousemove', onHeroMove)
+        heroEl.removeEventListener('mouseleave', onHeroLeave)
+      })
+    }
+
+    onScroll()
+    return () => cleanups.forEach((fn) => fn())
+  }, [])
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    if (emailJsServiceId && emailJsTemplateId && emailJsPublicKey) {
+      try {
+        setSubmitting(true)
+        setStatus({ type: '', message: '' })
+        await emailjs.sendForm(emailJsServiceId, emailJsTemplateId, form, { publicKey: emailJsPublicKey })
+        form.reset()
+        setStatus({ type: 'success', message: 'Thanks — we’ll be in touch within one business day.' })
+      } catch {
+        setStatus({ type: 'error', message: 'Something went wrong. Please email info@bittech.site directly.' })
+      } finally {
+        setSubmitting(false)
+      }
+      return
+    }
+    // mailto fallback when EmailJS isn't configured
+    const f = form
+    const body = encodeURIComponent(
+      'Name: ' + (f.name.value || '') + '\n' +
+      'Email: ' + (f.email.value || '') + '\n' +
+      'Phone: ' + (f.phone.value || '') + '\n\n' +
+      (f.project.value || '')
+    )
+    window.location.href = 'mailto:info@bittech.site?subject=' +
+      encodeURIComponent('Project inquiry — ' + (f.name.value || 'New lead')) + '&body=' + body
   }
 
+  const svc = SERVICES[activeSvc]
+
   return (
-    <div className="rx" ref={rootRef}>
-      {/* ======================= HERO ======================= */}
-      <section className="rx-hero">
-        <div className="rx-hero__bloom" />
-        <div className="rx-wrap rx-hero__inner">
-          <div className="rx-hero__topline rx-load rx-load--1">
-            <span><span className="rx-hero__dot" /> {t('home.hero.badge')}</span>
-            <span>EST. 2020 — WORLDWIDE</span>
-            <span>{t('home.partners')}</span>
-          </div>
+    <>
+      {/* atmosphere */}
+      <div className="fx fx-grid"></div>
+      <div className="fx fx-bloom"></div>
+      <div className="fx fx-spot"></div>
+      <div className="fx fx-grain"></div>
+      <div className="fx fx-vig"></div>
 
-          <h1 className="rx-hero__title">
-            <span className="rx-line"><span>Reliable</span></span>
-            <span className="rx-line"><span>Software<span className="rx-hero__badge">No-Code → Scale</span></span></span>
-            <span className="rx-line rx-ind"><span className="rx-outline">for Modern Cos.</span></span>
-          </h1>
+      <div className="progress" ref={progressRef}></div>
+      <div className="cursor" ref={cursorRef}></div>
+      <div className="cursor-dot" ref={cursorDotRef}></div>
 
-          <div className="rx-hero__grid">
-            <p className="rx-hero__lede rx-load rx-load--2">
-              {t('home.hero.descriptionPrefix')}{' '}
-              <span className="rx-volt">{t('home.hero.highlight')}</span>{' '}
-              {t('home.hero.descriptionSuffix')}
-              <span className="rx-hero__cta">
-                <a className="rx-btn" href="https://calendly.com/contact-BitTech/30min?month=2025-11" target="_blank" rel="noreferrer">
-                  {t('home.hero.primary')} <ArrowOut />
-                </a>
-                <a className="rx-btn rx-btn--ghost" href="https://www.figma.com/proto/Wvc5EAdw0leAMdlJ3tF6Be/BitTech-Portfolio-New-Branding" target="_blank" rel="noreferrer">
-                  View Work
-                </a>
-              </span>
-            </p>
-
-            <div className="rx-spec rx-load rx-load--3" aria-hidden="true">
-              <div className="rx-spec__row"><span className="rx-spec__k">Projects</span><span className="rx-spec__v"><b>1200+</b></span></div>
-              <div className="rx-spec__row"><span className="rx-spec__k">Repeat clients</span><span className="rx-spec__v"><b>200+</b></span></div>
-              <div className="rx-spec__row"><span className="rx-spec__k">Rating</span><span className="rx-spec__v"><b>4.8</b> / 5.0</span></div>
-              <div className="rx-spec__row"><span className="rx-spec__k">Response</span><span className="rx-spec__v">&lt; 1 day</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================= MARQUEE ======================= */}
-      <div className="rx-marq" aria-label={t('home.partners')}>
-        <div className="rx-marq__label">Trusted&nbsp;by</div>
-        <div className="rx-marq__view">
-          <div className="rx-marq__track">
-            {[...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS].map(([src, alt], i) => (
-              <img key={i} src={src} alt={alt} loading="lazy" decoding="async" />
-            ))}
-          </div>
+      {/* loader */}
+      <div className="loader" ref={loaderRef}>
+        <div className="loader__inner">
+          <div className="loader__top"><span>BitTech — Atelier</span><span className="loader__pct" ref={pctRef}>0%</span></div>
+          <div className="loader__bar"><i ref={barRef}></i></div>
+          <div className="loader__word">Crafted, <b>not copied.</b></div>
         </div>
       </div>
 
-      {/* ======================= SERVICES ======================= */}
-      <section className="rx-sec">
-        <div className="rx-wrap">
-          <div className="rx-sec__head rx-sec__head--split rx-fade">
+      <span id="top"></span>
+
+      {/* HERO */}
+      <section className="hero" id="hero" ref={heroRef}>
+        <canvas id="nodes" ref={canvasRef}></canvas>
+        <div className="wrap">
+          <div className="hero-status fade"><span className="dot"></span> Systems Operational — <b>1200</b> projects shipped since 2020</div>
+
+          <h1 className="hero-h1">
+            <span className="line"><span>Software that <em>works.</em></span></span>
+            <span className="line"><span>Solutions that <em>scale.</em></span></span>
+          </h1>
+
+          <div className="hero-meta fade">
             <div>
-              <span className="rx-kick">{t('home.services.eyebrow')}</span>
-              <h2 className="rx-h2">{t('home.services.title')}</h2>
+              <div className="hero-build">
+                <span className="arrow">↳</span> We build
+                <span className="rotator">
+                  {ROTATOR.map((word, i) => (
+                    <span key={word} className={i === rotIdx ? 'on' : ''}>{word}</span>
+                  ))}
+                </span>
+              </div>
             </div>
-            <p className="rx-lede">{t('home.services.description')}</p>
+            <p className="hero-sub">A software-engineering atelier delivering <b>reliable digital products</b> and custom systems for businesses worldwide — planned, built, and shipped with the discipline your operations deserve.</p>
           </div>
 
-          <div className="rx-list rx-fade">
-            {services.map((service, i) => (
-              <a key={service.title} className="rx-row" href={service.href} aria-label={service.ariaLabel}>
-                <span className="rx-row__num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="rx-row__main">
-                  <span className="rx-row__tag">{service.label}</span>
-                  <span className="rx-row__title">{service.title}</span>
-                </span>
-                <span className="rx-row__arr"><ArrowOut /></span>
-              </a>
+          <div className="hero-cta fade">
+            <a href="https://calendly.com/contact-BitTech/30min" target="_blank" rel="noreferrer" className="btn btn-gold" data-magnetic>
+              Schedule a Call<ArrowUpRight />
+            </a>
+            <a href="#work" className="btn btn-ghost" data-magnetic>
+              View Our Work<ArrowUpRight />
+            </a>
+            <span className="note">— or email info@bittech.site</span>
+          </div>
+        </div>
+
+        <div className="scroll-cue">Scroll <i></i></div>
+
+        <div className="hero-marquee fade">
+          <div className="marq">
+            {[...MARQUEE, ...MARQUEE].map((it, i) => (
+              <span className="it" key={it + i}>{it}</span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======================= SHOWCASE ======================= */}
-      <section className="rx-sec">
-        <div className="rx-wrap">
-          <div className="rx-sec__head rx-sec__head--split rx-fade">
-            <div>
-              <span className="rx-kick">{t('home.showcase.eyebrow')}</span>
-              <h2 className="rx-h2">{t('home.showcase.title')}</h2>
+      {/* STATS */}
+      <section className="stats">
+        <div className="wrap">
+          <div className="grid">
+            <div className="stat reveal"><div className="num"><span className="count" data-target="1200">0</span><b>+</b></div><div className="lab">Successful Projects</div></div>
+            <div className="stat reveal d1"><div className="num"><span className="count" data-target="200">0</span><b>+</b></div><div className="lab">Repeated Clients</div></div>
+            <div className="stat reveal d2"><div className="num"><span className="count" data-target="30">0</span></div><div className="lab">Engineers &amp; Experts</div></div>
+            <div className="stat reveal d3"><div className="num"><span className="count" data-target="4.8" data-dec="1">0</span><b>★</b></div><div className="lab">Rated on Google</div></div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="services" id="services">
+        <div className="wrap">
+          <div className="shead reveal">
+            <div><span className="eyebrow">What we build</span>
+              <h2 style={{ marginTop: '22px' }}>Software development, <em>engineered</em> around your business.</h2>
             </div>
-            <p className="rx-lede">{t('home.showcase.description')}</p>
+            <div className="meta"><span className="sec-index">(01 / Capabilities)</span>
+              <p style={{ marginTop: '14px' }}>Practical digital products built around business goals — not features for their own sake. Hover an offer to inspect it.</p>
+            </div>
           </div>
 
-          <div className="rx-folio">
-            {showcaseProjects.map((project, i) => (
-              <article className="rx-card rx-reveal" key={project.name}>
-                <div className="rx-card__media">
-                  <span className="rx-card__tag">Case {String(i + 1).padStart(2, '0')}</span>
-                  <img src={project.image} alt={project.title} width="600" height="510" loading="lazy" decoding="async" />
+          <div className="svc-wrap">
+            <div className="svc-list">
+              {SERVICES.map((s, i) => (
+                <a
+                  key={s.num}
+                  className={'svc' + (i === activeSvc ? ' active' : '')}
+                  href="#contact"
+                  onMouseEnter={() => setActiveSvc(i)}
+                  onFocus={() => setActiveSvc(i)}
+                >
+                  <span className="idx">{s.num}</span>
+                  <div className="body"><div className="lab">{s.lab}</div><h3>{s.title}</h3></div>
+                  <span className="go"><ArrowUpRight /></span>
+                </a>
+              ))}
+            </div>
+
+            <aside className="svc-preview">
+              <span className="corner cor-tl"></span><span className="corner cor-br"></span>
+              <div className="pv-top"><span>Capability</span><span>{svc.num} / 06</span></div>
+              <div>
+                <div className="pv-num">{svc.num}</div>
+                <div className="pv-title">{svc.title}</div>
+                <p className="pv-desc">{svc.desc}</p>
+                <div className="pv-tags">
+                  {svc.tags.map((tg) => <span key={tg}>{tg}</span>)}
                 </div>
-                <div className="rx-card__body">
-                  <div>
-                    <h3 className="rx-card__name">{project.name}</h3>
-                    <p className="rx-card__desc">{project.title}</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* WORK */}
+      <section className="work" id="work">
+        <div className="wrap">
+          <div className="shead reveal">
+            <div><span className="eyebrow">Selected work</span>
+              <h2 style={{ marginTop: '22px' }}>Products people <em>actually</em> use.</h2>
+            </div>
+            <div className="meta"><span className="sec-index">(02 / Case Studies)</span>
+              <p style={{ marginTop: '14px' }}>Software built to serve real users, support operations, and solve practical market needs.</p>
+            </div>
+          </div>
+
+          <div className="work-grid">
+            {PROJECTS.map((pr, i) => (
+              <article className={'proj reveal' + (pr.delay ? ' ' + pr.delay : '')} key={i}>
+                <div className="art">
+                  <div className="scene" style={{ background: pr.scene }}></div>
+                  <span className="watermark">{pr.mark}</span>
+                  <div className="mock">
+                    <div className="bar"><i></i><i></i><i></i></div>
+                    {pr.chipsTop && <div className="chips"><i></i><i></i><i></i></div>}
+                    {pr.rows && pr.rows.map((r, k) => <div className={'row ' + r} key={'r' + k}></div>)}
+                    {pr.chipsFirst && <div className="chips"><i></i><i></i><i></i></div>}
+                    {pr.rowsAfter && pr.rowsAfter.map((r, k) => (
+                      <div className={'row ' + r} key={'ra' + k} style={k === 0 ? { marginTop: '13px' } : undefined}></div>
+                    ))}
+                    {pr.extra && <div className={'row ' + pr.extra} style={{ marginTop: '13px' }}></div>}
                   </div>
-                  <span className="rx-card__idx">/ 0{i + 1}</span>
+                </div>
+                <div className="meta">
+                  <div>
+                    <div className="k">{pr.k}</div>
+                    <h3>{pr.h}</h3>
+                    <p>{pr.p}</p>
+                  </div>
+                  <span className="yr">{pr.yr}</span>
                 </div>
               </article>
             ))}
           </div>
-
-          <div className="rx-discovery rx-fade">
-            <h3>{t('home.discovery.title')}</h3>
-            <p>
-              {t('home.discovery.prefix')}
-              <a href="work" className="rx-inline">{t('home.discovery.link')}</a>
-              {t('home.discovery.suffix')}
-            </p>
-            <a className="rx-btn" href="https://calendly.com/contact-BitTech/30min?month=2025-11" target="_blank" rel="noreferrer">
-              {t('home.discovery.primary')} <ArrowOut />
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* ======================= PROCESS ======================= */}
-      <section className="rx-sec">
-        <div className="rx-wrap">
-          <div className="rx-sec__head rx-sec__head--split rx-fade">
-            <div>
-              <span className="rx-kick">{t('home.process.eyebrow')}</span>
-              <h2 className="rx-h2">{t('home.process.title')}</h2>
+      {/* PROCESS */}
+      <section className="process" id="process">
+        <div className="wrap">
+          <div className="shead reveal">
+            <div><span className="eyebrow">Our process, your advantage</span>
+              <h2 style={{ marginTop: '22px' }}>From requirements <em>to</em> delivery.</h2>
             </div>
-            <p className="rx-lede">{t('home.process.description')}</p>
+            <div className="meta"><span className="sec-index">(03 / Method)</span>
+              <p style={{ marginTop: '14px' }}>A path built to move software forward with clarity, structure and measurable progress.</p>
+            </div>
           </div>
 
-          <div className="rx-proc">
-            <div className="rx-proc__steps">
-              {processSteps.map((step, i) => (
-                <div
-                  key={step.title}
-                  className={'rx-step' + (i === activeStep ? ' is-active' : '')}
-                  data-n={String(i + 1).padStart(2, '0')}
-                >
-                  <span className="rx-step__bar" />
-                  <h3 className="rx-step__title">{step.title}</h3>
-                  <p className="rx-step__sub">{step.subtitle}</p>
-                  <p className="rx-step__desc">{step.description}</p>
-                  <div className="rx-step__mob">
-                    <img src={step.mobileImage} alt={step.title} width="327" height="185" loading="lazy" decoding="async" />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="rx-proc__media">
-              <div className="rx-proc__frame">
-                <img src={PROCESS_IMAGES[activeStep]} alt={processSteps[activeStep]?.title || 'process'} width="600" height="600" decoding="async" />
-                <span className="rx-proc__corner">
-                  {String(activeStep + 1).padStart(2, '0')} / {String(processSteps.length).padStart(2, '0')} — {processSteps[activeStep]?.title}
-                </span>
+          <div className="timeline" ref={timelineRef}>
+            <div className="spine"><i ref={spineRef}></i></div>
+            {STEPS.map(([title, sub, body], i) => (
+              <div className="step" key={title}>
+                <span className="node"></span>
+                <div className="ph">Phase {String(i + 1).padStart(2, '0')} / 06</div>
+                <div className="ct"><h3>{title}</h3><div className="sub">{sub}</div><p>{body}</p></div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ======================= SIGNATURE FLIP ======================= */}
-      <section className="rx-flip">
-        <div className="rx-wrap rx-flip__inner">
-          <div>
-            <span className="rx-flip__kick">{t('home.gradient.primary')}</span>
-            <h2>{t('home.gradient.title')}</h2>
-            <p>{t('home.gradient.description')}</p>
-            <a className="rx-btn" href="https://calendly.com/contact-BitTech/30min?month=2025-11" target="_blank" rel="noreferrer">
-              {t('home.gradient.primary')} <ArrowOut />
-            </a>
-          </div>
-          <div className="rx-flip__star">
-            <img src="/frontend-assets/images/star.gif" alt="" width="360" height="360" loading="lazy" />
-          </div>
-        </div>
-      </section>
+      {/* MANIFESTO / VALUES */}
+      <section className="manifesto" id="about">
+        <div className="wrap">
+          <span className="eyebrow" style={{ justifyContent: 'center' }}>The studio — est. 2020</span>
+          <p className="big reveal">We build strong partnerships through clear execution and software <em>designed around real business needs</em> — crafted, not copied.</p>
 
-      {/* ======================= FAQ ======================= */}
-      <section className="rx-sec">
-        <div className="rx-wrap">
-          <div className="rx-faq">
-            <div className="rx-fade">
-              <span className="rx-kick">{t('home.faq.eyebrow')}</span>
-              <h2 className="rx-h2">{t('home.faq.title')}</h2>
-              <p className="rx-lede">{t('home.faq.description')}</p>
-              <div style={{ marginTop: 28 }}>
-                <a className="rx-btn rx-btn--ghost" href="https://calendly.com/contact-BitTech/30min?month=2025-11" target="_blank" rel="noreferrer">
-                  {t('home.faq.primary')} <ArrowOut />
-                </a>
+          <div className="values">
+            {VALUES.map(([vn, h, p], i) => (
+              <div className={'val reveal' + (i ? ' d' + i : '')} key={vn}>
+                <div className="vn">{vn}</div><h4>{h}</h4><p>{p}</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div className="rx-acc rx-fade">
-              {faqs.map((faq, i) => (
-                <div className={'rx-acc__item' + (i === openFaq ? ' is-open' : '')} key={faq.question}>
-                  <button className="rx-acc__btn" onClick={() => setOpenFaq(openFaq === i ? -1 : i)} aria-expanded={i === openFaq}>
-                    <span className="rx-acc__n">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="rx-acc__q">{faq.question}</span>
-                    <span className="rx-acc__ic" aria-hidden="true" />
-                  </button>
-                  <div className="rx-acc__panel">
-                    <div>
-                      {faq.answers.map((answer, ai) => (
-                        <p key={ai}>{answer}</p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
+      {/* INDUSTRIES */}
+      <section className="industries">
+        <div className="wrap">
+          <div className="shead reveal" style={{ border: 'none', paddingBottom: 0 }}>
+            <div><span className="eyebrow">Industries we serve</span>
+              <h2 style={{ marginTop: '22px' }}>Domain fluency across <em>ten</em> sectors.</h2>
+            </div>
+            <div className="meta"><span className="sec-index">(04 / Sectors)</span></div>
+          </div>
+          <div className="ind-row reveal">
+            {INDUSTRIES.map((ind) => (
+              <span className="ind" key={ind}><span className="d"></span>{ind}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST */}
+      <section className="trust">
+        <div className="wrap">
+          <div className="row">
+            <div className="rate reveal">
+              <div className="big">4.9</div>
+              <div><div className="stars">★★★★★</div><div className="sub">Average rating · 41 reviews</div></div>
+            </div>
+            <div className="plats reveal d1">
+              <div className="plat">Reviewed on<b>Clutch</b></div>
+              <div className="plat">Verified on<b>Upwork</b></div>
+              <div className="plat">Listed on<b>GoodFirms</b></div>
+              <div className="plat">150M views<b>Dribbble</b></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ======================= CONTACT ======================= */}
-      <section className="rx-sec">
-        <div className="rx-wrap">
-          <div className="rx-contact">
-            <div className="rx-fade">
-              <span className="rx-kick">{t('common.contact.eyebrow')}</span>
-              <h2 className="rx-h2">{t('common.contact.title')}</h2>
-              <p className="rx-lede">{t('common.contact.description')}</p>
-              <ul className="rx-points">
-                {contactPoints.map((point, i) => (
-                  <li key={i}>
-                    <span className="rx-points__n">0{i + 1}</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rx-fade">
-              <form className="rx-form" onSubmit={handleContactSubmit}>
-                <div className="rx-field">
-                  <input type="text" name="full_name" id="fullName" placeholder=" " required />
-                  <label htmlFor="fullName">{t('common.form.fullName')}</label>
+      {/* CONTACT / CTA */}
+      <section className="cta" id="contact">
+        <div className="wrap">
+          <div className="cta-card reveal">
+            <span className="corner cor-tl" style={{ borderTop: '1px solid var(--line-gold)', borderLeft: '1px solid var(--line-gold)', top: '16px', left: '16px' }}></span>
+            <span className="corner cor-br" style={{ borderBottom: '1px solid var(--line-gold)', borderRight: '1px solid var(--line-gold)', bottom: '16px', right: '16px' }}></span>
+            <div className="grid">
+              <div className="left">
+                <span className="eyebrow">Contact us</span>
+                <h2 style={{ marginTop: '24px' }}>Let's build software that <em>moves your business forward.</em></h2>
+                <ul className="points">
+                  <li><CheckCircle /> You'll hear from us within one business day.</li>
+                  <li><CheckCircle /> We'll understand your goals and technical requirements.</li>
+                  <li><CheckCircle /> You'll get a clear proposal — scope, timeline, pricing.</li>
+                </ul>
+              </div>
+              <form className="right" onSubmit={handleSubmit}>
+                <div className="field"><label>Full name</label><input type="text" name="name" placeholder="Jane Doe" required /></div>
+                <div className="row2">
+                  <div className="field"><label>Email</label><input type="email" name="email" placeholder="jane@company.com" required /></div>
+                  <div className="field"><label>Phone</label><input type="tel" name="phone" placeholder="+20 ···" /></div>
                 </div>
-                <div className="rx-field">
-                  <input type="email" name="email" id="email" placeholder=" " required />
-                  <label htmlFor="email">{t('common.form.email')}</label>
-                </div>
-                <div className="rx-field">
-                  <input type="tel" name="phone" id="phone" placeholder=" " required />
-                  <label htmlFor="phone">{t('common.form.phone')}</label>
-                </div>
-                <div className="rx-field">
-                  <textarea name="about_project" id="aboutProject" placeholder=" " required />
-                  <label htmlFor="aboutProject">{t('common.form.project')}</label>
-                </div>
-                <button type="submit" className="rx-btn rx-form__submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Transmitting…' : t('common.form.submit')} <ArrowOut />
+                <div className="field"><label>About your project</label><textarea name="project" placeholder="Goals, timeline, requirements…" required></textarea></div>
+                <button type="submit" className="btn btn-gold submit" data-magnetic disabled={submitting}>
+                  {submitting ? 'Sending…' : 'Submit Inquiry'}<ArrowUpRight />
                 </button>
-                {submitStatus.message ? (
-                  <p className={'rx-status ' + (submitStatus.type === 'success' ? 'ok' : 'err')}>
-                    {submitStatus.message}
-                  </p>
-                ) : null}
+                {status.message && <div className={'form-status ' + status.type}>{status.message}</div>}
+                <div className="alt">Prefer email? <a href="mailto:info@bittech.site">info@bittech.site</a></div>
               </form>
-              <div className="rx-mailto">
-                {t('common.form.preferEmail')}{' '}
-                <a href="mailto:info@bittech.site">info@bittech.site</a>
-              </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ======================= WHATSAPP ======================= */}
-      <a
-        className="rx-wa"
-        target="_blank"
-        rel="noreferrer"
-        href="https://wa.me/201011125116?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85"
-        aria-label={t('home.whatsAppLabel')}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 28 28" fill="none">
-          <path fillRule="evenodd" clipRule="evenodd" d="M23.8635 4.06584C21.2463 1.44525 17.7654 0.00132957 14.0566 0C6.41419 0 0.194436 6.21909 0.191777 13.8635C0.190448 16.3072 0.829309 18.6925 2.04255 20.7946L0.0754395 27.9796L7.42533 26.0517C9.45026 27.1566 11.7305 27.7383 14.0506 27.739H14.0566C21.6976 27.739 27.9181 21.5192 27.9207 13.8748C27.9221 10.17 26.4815 6.6871 23.8635 4.0665V4.06584ZM14.0566 25.3975H14.0519C11.9844 25.3969 9.95619 24.8411 8.18654 23.7914L7.76571 23.5415L3.40404 24.6856L4.56808 20.4329L4.29418 19.9968C3.14077 18.162 2.53116 16.0413 2.53249 13.8642C2.53515 7.51078 7.70454 2.34138 14.0613 2.34138C17.1392 2.34271 20.0324 3.54266 22.2082 5.72117C24.3841 7.89902 25.58 10.7949 25.58 13.8735C25.5773 20.2275 20.408 25.3969 14.0566 25.3969V25.3975ZM20.3774 16.7673C20.031 16.5938 18.3279 15.7561 18.0101 15.6405C17.6923 15.5248 17.4617 15.467 17.2309 15.814C17.0003 16.161 16.3362 16.9415 16.1341 17.1721C15.9319 17.4035 15.7298 17.4321 15.3835 17.2585C15.0372 17.085 13.921 16.7194 12.5974 15.5394C11.5677 14.6206 10.8722 13.4866 10.6702 13.1395C10.4681 12.7925 10.6489 12.605 10.8217 12.4329C10.9773 12.2773 11.1681 12.028 11.3416 11.8259C11.5151 11.6238 11.5723 11.4789 11.6879 11.2482C11.8036 11.0168 11.7458 10.8148 11.6594 10.6412C11.5729 10.4677 10.8803 8.76253 10.5911 8.06918C10.3098 7.39377 10.024 7.48551 9.81194 7.47421C9.60983 7.46424 9.37917 7.46225 9.14783 7.46225C8.91648 7.46225 8.5415 7.54867 8.22375 7.89569C7.906 8.24267 7.01117 9.08097 7.01117 10.7855C7.01117 12.49 8.25237 14.1381 8.42586 14.3694C8.59935 14.6008 10.8689 18.0995 14.3438 19.6006C15.1701 19.9576 15.8156 20.171 16.3188 20.3306C17.1486 20.5945 17.9037 20.5573 18.5007 20.4682C19.1662 20.3685 20.5502 19.6299 20.8388 18.8208C21.1273 18.0117 21.1273 17.3177 21.0409 17.1734C20.9545 17.0292 20.7231 16.9421 20.3768 16.7686L20.3774 16.7673Z" fill="#25D366" />
-        </svg>
-      </a>
-    </div>
+    </>
   )
 }
