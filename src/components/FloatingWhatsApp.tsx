@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "motion/react";
-import { whatsappLink } from "@/lib/site";
+import { useLocale } from "./LocaleProvider";
 import { WhatsAppIcon } from "./icons";
 
 export function FloatingWhatsApp() {
   const [show, setShow] = useState(false);
+  const { t, wa } = useLocale();
 
   useLenis(({ scroll, limit }) => {
     // Appears after the hero, steps aside at the contact section which has its own big button.
@@ -19,10 +20,10 @@ export function FloatingWhatsApp() {
       {show && (
         <motion.a
           className="fab"
-          href={whatsappLink()}
+          href={wa}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Message BitTech on WhatsApp"
+          aria-label={t.fab}
           initial={{ scale: 0, rotate: -30 }}
           animate={{ scale: 1, rotate: 0 }}
           exit={{ scale: 0, rotate: 30 }}

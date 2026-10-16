@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { faqs } from "@/lib/site";
+import { useLocale } from "./LocaleProvider";
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
+  const { t } = useLocale();
+  const faqs = t.faq.items;
 
   return (
     <section id="questions" className="faq" aria-labelledby="faq-title">
       <div className="wrap faq-inner">
         <h2 id="faq-title" className="section-title">
-          Questions people ask us
+          {t.faq.title}
         </h2>
         <div className="faq-list">
           {faqs.map((f, i) => {

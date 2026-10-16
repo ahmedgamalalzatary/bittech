@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
-import { whatsappLink } from "@/lib/site";
+import { useLocale } from "./LocaleProvider";
 import { AnimatedMark } from "./AnimatedMark";
 import { WhatsAppIcon } from "./icons";
 import { RollText } from "./RollText";
@@ -13,6 +14,9 @@ gsap.registerPlugin(SplitText, useGSAP);
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const { t, wa } = useLocale();
+  const [scrolled, setScrolled] = useState(false);
+  useLenis(({ scroll }) => setScrolled(scroll > 80));
 
   useGSAP(
     () => {
@@ -23,7 +27,6 @@ export function Hero() {
         tl.from(split.words, { yPercent: 115, rotate: 4, duration: 1.1, stagger: 0.06 }, 0.1)
           .from(".hero-sub", { y: 20, opacity: 0, duration: 0.9 }, 0.55)
           .from(".hero-actions > *", { y: 16, opacity: 0, duration: 0.8, stagger: 0.08 }, 0.7)
-          .from(".hero-note", { opacity: 0, duration: 0.8 }, 0.95)
           .from(".hero-floor", { opacity: 0, scale: 0.9, duration: 1.4 }, 0);
         return () => split.revert();
       });
@@ -36,25 +39,22 @@ export function Hero() {
       <div className="hero-inner wrap">
         <div className="hero-copy">
           <h1 id="hero-title" className="hero-title">
-            You have
-            <br /> the idea.
-            <br /> We build
-            <br /> the software.
+            {t.hero.lines.map((line, i) => (
+              <span key={i} className="hero-line">
+                {line}
+              </span>
+            ))}
           </h1>
-          <p className="hero-sub">
-            BitTech is a software house in Fayoum, Egypt. We design and build websites, mobile apps, desktop programs,
-            online stores and AI tools, then keep them running after launch.
-          </p>
+          <p className="hero-sub">{t.hero.sub}</p>
           <div className="hero-actions">
-            <a className="btn btn-primary" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-primary" href={wa} target="_blank" rel="noopener noreferrer">
               <WhatsAppIcon className="btn-icon" />
-              <RollText>Message us on WhatsApp</RollText>
+              <RollText>{t.whatsappCta}</RollText>
             </a>
             <a className="btn btn-ghost" href="#services">
-              <RollText>See what we build</RollText>
+              <RollText>{t.hero.secondary}</RollText>
             </a>
           </div>
-          <p className="hero-note">Send your idea in a message or a voice note. We reply with questions, a plan and a price.</p>
         </div>
 
         <div className="hero-visual" aria-hidden="true">
@@ -83,6 +83,14 @@ export function Hero() {
           <span className="bit bit-3" />
         </div>
       </div>
+
+      <a href="#services" className="scroll-cue" data-hidden={scrolled} aria-label={t.hero.scrollLabel}>
+        <span className="scroll-cue-ring">
+          <svg viewBox="0 0 24 24" className="scroll-cue-arrow" aria-hidden="true">
+            <path d="M12 5v14M6 13l6 6 6-6" />
+          </svg>
+        </span>
+      </a>
     </section>
   );
 }

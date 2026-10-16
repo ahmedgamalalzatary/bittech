@@ -1,19 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useLenis } from "lenis/react";
-import { services } from "@/lib/site";
+import { useLocale } from "./LocaleProvider";
 import { BlockStage } from "./BlockStage";
 import { scenes } from "./blocks";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const sceneList = services.map((s) => scenes[s.id]);
-const last = services.length - 1;
 
 export function Services() {
   const section = useRef<HTMLElement>(null);
@@ -22,6 +20,10 @@ export function Services() {
   const [active, setActive] = useState(0);
   const reduce = useReducedMotion() ?? false;
   const lenis = useLenis();
+  const { t } = useLocale();
+  const services = t.services.items;
+  const last = services.length - 1;
+  const sceneList = useMemo(() => services.map((s) => scenes[s.id]), [services]);
 
   useGSAP(
     () => {
@@ -47,7 +49,10 @@ export function Services() {
     const row = section.current?.querySelector<HTMLElement>(".svc-tabs");
     const tab = row?.querySelector<HTMLElement>('[aria-selected="true"]');
     if (!row || !tab || row.scrollWidth <= row.clientWidth) return;
-    row.scrollTo({ left: tab.offsetLeft - (row.clientWidth - tab.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
+    // Rect-based so it works the same for left-to-right and right-to-left rows.
+    const r = row.getBoundingClientRect();
+    const b = tab.getBoundingClientRect();
+    row.scrollBy({ left: b.left + b.width / 2 - (r.left + r.width / 2), behavior: reduce ? "auto" : "smooth" });
   }, [active, reduce]);
 
   const goTo = (i: number) => {
@@ -65,10 +70,10 @@ export function Services() {
       <div className="svc-inner wrap">
         <div className="svc-copy">
           <h2 id="svc-title" className="svc-title">
-            What we build
+            {t.services.title}
           </h2>
 
-          <ul className="svc-tabs" role="tablist" aria-label="Services">
+          <ul className="svc-tabs" role="tablist" aria-label={t.services.tabsLabel}>
             {services.map((s, i) => (
               <li key={s.id}>
                 <button
@@ -118,9 +123,9 @@ export function Services() {
             position={position}
             reduceMotion={reduce}
             className="stage"
-            label={`Illustration: ${svc.name}`}
+            label={`${t.services.illustration}: ${svc.name}`}
           />
-          <p className="svc-hint">Keep scrolling. The blocks rebuild into each thing we make.</p>
+          <p className="svc-hint">{t.services.hint}</p>
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-// Vector trace of the BitTech mark (traced from public/logo.jpeg, isometric 30° grid).
+// Vector trace of the BitTechnologies mark (traced from public/logo.jpeg, isometric 30° grid).
 export const MARK_VIEWBOX = "125 328 437 624";
 
 export type MarkPiece = {

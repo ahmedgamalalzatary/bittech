@@ -26,6 +26,12 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Arabic pages: Alexandria for headings, IBM Plex Sans Arabic for text. */
+:root:lang(ar) {
+  --font-display: var(--font-alexandria), system-ui, sans-serif;
+  --font-body: var(--font-plex-arabic), system-ui, sans-serif;
+}
+
 html {
   background: var(--paper);
   color-scheme: light;
@@ -63,6 +69,25 @@ p {
   text-wrap: pretty;
 }
 
+/* Arabic script breaks with letter-spacing and needs taller lines. */
+:lang(ar) :is(h1, h2, h3, .btn, .next-title) {
+  letter-spacing: 0 !important;
+}
+
+:lang(ar) body {
+  line-height: 1.8;
+}
+
+:lang(ar) :is(.hero-title, .contact-title) {
+  font-size: clamp(2.3rem, 1.3rem + 3.6vw, 4.4rem);
+  line-height: 1.3;
+  max-width: none;
+}
+
+:lang(ar) :is(.section-title, .svc-title) {
+  line-height: 1.3;
+}
+
 a {
   color: inherit;
 }
@@ -97,7 +122,7 @@ a {
 .skip-link {
   position: fixed;
   top: 8px;
-  left: 8px;
+  inset-inline-start: 8px;
   z-index: 100;
   padding: 10px 16px;
   background: var(--ink);
@@ -126,13 +151,14 @@ a {
 }
 
 .wordmark-text {
+  direction: ltr;
   display: flex;
   flex-direction: column;
   line-height: 1;
 }
 
 .wordmark-bit {
-  font-family: var(--font-display);
+  font-family: var(--font-sora), sans-serif;
   font-weight: 800;
   font-size: 1.3rem;
   color: var(--ink);
@@ -140,7 +166,7 @@ a {
 }
 
 .wordmark-tech {
-  font-family: var(--font-display);
+  font-family: var(--font-sora), sans-serif;
   font-size: 0.56rem;
   font-weight: 600;
   letter-spacing: 0.28em;
@@ -205,6 +231,14 @@ a {
 
 .btn-primary:hover::before {
   transform: translateX(0) skewX(-30deg);
+}
+
+[dir="rtl"] .btn-primary::before {
+  transform: translateX(101%) skewX(30deg);
+}
+
+[dir="rtl"] .btn-primary:hover::before {
+  transform: translateX(0) skewX(30deg);
 }
 
 .btn-ghost {
@@ -308,7 +342,7 @@ a {
 }
 
 .header-brand {
-  margin-right: auto;
+  margin-inline-end: auto;
   text-decoration: none;
 }
 
@@ -327,6 +361,11 @@ a {
   transition:
     color 0.2s,
     background-color 0.2s;
+}
+
+.header-nav .lang-switch {
+  margin-inline-start: 8px;
+  border: 1px solid var(--line);
 }
 
 .header-nav a:hover {
@@ -426,6 +465,10 @@ a {
   max-width: 12ch;
 }
 
+.hero-line {
+  display: block;
+}
+
 .hero-sub {
   margin-top: 28px;
   max-width: 34em;
@@ -438,13 +481,6 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-}
-
-.hero-note {
-  margin-top: 20px;
-  font-size: 0.98rem;
-  color: var(--muted);
-  max-width: 34em;
 }
 
 .hero-visual {
@@ -465,6 +501,19 @@ a {
 .hero-floor circle {
   fill: var(--gold-deep);
   opacity: 0.35;
+}
+
+.mark-tilt {
+  touch-action: pan-y;
+  cursor: grab;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.mark-tilt svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hero-mark {
@@ -504,6 +553,87 @@ a {
   animation-delay: -4s;
 }
 
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  translate: -50% 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  text-decoration: none;
+  animation: cue-in 0.8s var(--ease-out) 1.4s backwards;
+  transition:
+    opacity 0.4s,
+    translate 0.4s var(--ease-out);
+}
+
+@keyframes cue-in {
+  from {
+    opacity: 0;
+    translate: -50% -12px;
+  }
+}
+
+.scroll-cue[data-hidden="true"] {
+  opacity: 0;
+  translate: -50% 12px;
+  pointer-events: none;
+}
+
+.scroll-cue-ring {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  overflow: hidden;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+}
+
+.scroll-cue:hover .scroll-cue-ring {
+  border-color: var(--ink);
+  background: var(--gold-bright);
+}
+
+.scroll-cue-arrow {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: cue-drop 1.8s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+}
+
+/* The arrow falls out of the ring and drops back in from the top. */
+@keyframes cue-drop {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(26px);
+    opacity: 1;
+  }
+  46% {
+    transform: translateY(-26px);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @keyframes bit-float {
   0%,
   100% {
@@ -521,6 +651,9 @@ a {
   }
   .hero-inner {
     grid-template-columns: 1fr;
+  }
+  .scroll-cue {
+    display: none;
   }
   .hero-visual {
     order: -1;
@@ -655,6 +788,10 @@ a {
   height: 100%;
   background: var(--ink);
   transform-origin: left;
+}
+
+[dir="rtl"] .svc-progress-fill {
+  transform-origin: right;
   transform: scaleX(0);
 }
 
@@ -769,8 +906,8 @@ a {
   width: max-content;
   padding-top: calc(var(--header-h) + 24px);
   padding-bottom: 32px;
-  padding-left: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
-  padding-right: 10vw;
+  padding-inline-start: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
+  padding-inline-end: 10vw;
   will-change: transform;
 }
 
@@ -778,23 +915,6 @@ a {
   flex: none;
   width: min(400px, 80vw);
   align-self: center;
-}
-
-.work-progress {
-  margin-top: 36px;
-  height: 3px;
-  width: 200px;
-  background: var(--line);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.work-progress-fill {
-  display: block;
-  height: 100%;
-  background: var(--ink);
-  transform-origin: left;
-  transform: scaleX(0);
 }
 
 .project {
@@ -820,11 +940,20 @@ a {
   );
 }
 
+[dir="rtl"] .project-frame {
+  clip-path: polygon(
+    100% 100%,
+    100% calc(100% - var(--reveal) * 200%),
+    calc(100% - var(--reveal) * 200%) 100%
+  );
+}
+
 .project-img {
+  display: block;
   width: 112%;
   max-width: none;
   height: 100%;
-  margin-left: -6%;
+  margin-inline: -6%;
   object-fit: cover;
 }
 
@@ -872,34 +1001,6 @@ a {
   font-size: 0.98rem;
 }
 
-.project-frame-empty {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 14px;
-  padding: clamp(24px, 3vw, 36px);
-  border: 2px dashed #cfd3d9;
-  background: var(--paper);
-}
-
-.next-title {
-  font-family: var(--font-display);
-  font-size: var(--step-2);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
-.next-text {
-  font-size: 1rem;
-}
-
-.project-frame-empty .btn {
-  margin-top: 8px;
-}
-
 @media (max-height: 780px) {
   .project-desc {
     display: none;
@@ -912,9 +1013,6 @@ a {
   }
   .project {
     width: 76vw;
-  }
-  .project-frame-empty .btn {
-    white-space: normal;
   }
 }
 
@@ -1007,7 +1105,7 @@ a {
   align-items: center;
   gap: 24px;
   padding: 24px 0;
-  text-align: left;
+  text-align: start;
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 600;
@@ -1223,7 +1321,7 @@ a {
 
 .fab {
   position: fixed;
-  right: 20px;
+  inset-inline-end: 20px;
   bottom: 20px;
   z-index: 40;
   width: 60px;

@@ -21,7 +21,7 @@ export function MarkGradients({ id }: { id: string }) {
   );
 }
 
-export function Mark({ className, title = "BitTech" }: { className?: string; title?: string }) {
+export function Mark({ className, title = "BitTechnologies" }: { className?: string; title?: string }) {
   const id = useId().replace(/:/g, "");
   return (
     <svg

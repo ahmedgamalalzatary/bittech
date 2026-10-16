@@ -1,20 +1,25 @@
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { Services } from "@/components/Services";
-import { Work } from "@/components/Work";
-import { Faq } from "@/components/Faq";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { AnimatedMark } from "@/components/AnimatedMark";
-import { Wordmark } from "@/components/Mark";
-import { RollText } from "@/components/RollText";
-import { Cube, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
-import { EMAIL, LOCATION, WHATSAPP_DISPLAY, reasons, services, whatsappLink } from "@/lib/site";
+import { Header } from "./Header";
+import { Hero } from "./Hero";
+import { Services } from "./Services";
+import { Work } from "./Work";
+import { Faq } from "./Faq";
+import { FloatingWhatsApp } from "./FloatingWhatsApp";
+import { AnimatedMark } from "./AnimatedMark";
+import { LocaleProvider } from "./LocaleProvider";
+import { Wordmark } from "./Mark";
+import { RollText } from "./RollText";
+import { Cube, MailIcon, PinIcon, WhatsAppIcon } from "./icons";
+import { content } from "@/lib/content";
+import { EMAIL, WHATSAPP_DISPLAY, whatsappLink, type Locale } from "@/lib/site";
 
-export default function Home() {
+export function HomePage({ locale }: { locale: Locale }) {
+  const t = content[locale];
+  const wa = whatsappLink(t.whatsappMessage);
+
   return (
-    <>
+    <LocaleProvider locale={locale}>
       <a className="skip-link" href="#main">
-        Skip to content
+        {t.skip}
       </a>
       <Header />
       <main id="main">
@@ -27,15 +32,12 @@ export default function Home() {
           <div className="wrap reasons-inner">
             <div className="section-head">
               <h2 id="reasons-title" className="section-title">
-                Why people work with us
+                {t.reasons.title}
               </h2>
-              <p className="section-lead">
-                We&apos;re a young team, and that works in your favor: you get our full attention, from the first message
-                to long after launch.
-              </p>
+              <p className="section-lead">{t.reasons.lead}</p>
             </div>
             <ul className="reasons-list">
-              {reasons.map((r) => (
+              {t.reasons.items.map((r) => (
                 <li key={r.title}>
                   <Cube className="reason-cube" />
                   <h3>{r.title}</h3>
@@ -52,19 +54,17 @@ export default function Home() {
           <div className="wrap contact-inner">
             <div className="contact-copy">
               <h2 id="contact-title" className="contact-title">
-                Have an idea? Send it to us.
+                {t.contact.title}
               </h2>
-              <p className="contact-lead">
-                One message is all it takes to start. Tell us what you want to build and we&apos;ll take it from there.
-              </p>
-              <a className="btn btn-primary btn-large" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+              <p className="contact-lead">{t.contact.lead}</p>
+              <a className="btn btn-primary btn-large" href={wa} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon className="btn-icon" />
-                <RollText>Message us on WhatsApp</RollText>
+                <RollText>{t.whatsappCta}</RollText>
               </a>
               <ul className="contact-list">
                 <li>
                   <WhatsAppIcon className="contact-icon" />
-                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" dir="ltr">
+                  <a href={wa} target="_blank" rel="noopener noreferrer" dir="ltr">
                     {WHATSAPP_DISPLAY}
                   </a>
                 </li>
@@ -74,7 +74,7 @@ export default function Home() {
                 </li>
                 <li>
                   <PinIcon className="contact-icon" />
-                  <span>{LOCATION}</span>
+                  <span>{t.contact.location}</span>
                 </li>
               </ul>
             </div>
@@ -89,37 +89,37 @@ export default function Home() {
         <div className="wrap footer-inner">
           <div className="footer-brand">
             <Wordmark />
-            <p>Websites, apps and software, built in Fayoum for people across Egypt.</p>
+            <p>{t.footer.tagline}</p>
           </div>
           <div className="footer-col">
-            <h2>What we build</h2>
+            <h2>{t.footer.servicesTitle}</h2>
             <ul>
-              {services.map((s) => (
+              {t.services.items.map((s) => (
                 <li key={s.id}>{s.name}</li>
               ))}
             </ul>
           </div>
           <div className="footer-col">
-            <h2>Contact</h2>
+            <h2>{t.footer.contactTitle}</h2>
             <ul>
               <li>
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" dir="ltr">
+                <a href={wa} target="_blank" rel="noopener noreferrer" dir="ltr">
                   {WHATSAPP_DISPLAY}
                 </a>
               </li>
               <li>
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               </li>
-              <li>{LOCATION}</li>
+              <li>{t.contact.location}</li>
             </ul>
           </div>
         </div>
         <div className="wrap footer-base">
-          <p>© 2026 BitTech. All rights reserved.</p>
+          <p>{t.footer.rights}</p>
         </div>
       </footer>
 
       <FloatingWhatsApp />
-    </>
+    </LocaleProvider>
   );
 }

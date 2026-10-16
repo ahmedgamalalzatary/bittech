@@ -5,15 +5,15 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { projects, whatsappLink } from "@/lib/site";
-import { RollText } from "./RollText";
-import { WhatsAppIcon } from "./icons";
+import { useLocale } from "./LocaleProvider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Work() {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  const { t, rtl } = useLocale();
+  const projects = t.work.projects;
 
   useGSAP(
     () => {
@@ -24,8 +24,9 @@ export function Work() {
         gsap.set(".work-viewport", { overflowX: "clip" });
 
         // Vertical scroll drives the row of projects sideways while the section is pinned.
+        // In Arabic the row starts on the right and moves the other way.
         const slide = gsap.to(el, {
-          x: () => -distance(),
+          x: () => (rtl ? distance() : -distance()),
           ease: "none",
           scrollTrigger: {
             trigger: root.current,
@@ -34,14 +35,16 @@ export function Work() {
             pin: true,
             scrub: 0.8,
             invalidateOnRefresh: true,
-            onUpdate: (self) => gsap.set(".work-progress-fill", { scaleX: self.progress }),
           },
         });
 
         gsap.utils.toArray<HTMLElement>(".project").forEach((card) => {
           const frame = card.querySelector(".project-frame");
           const img = card.querySelector(".project-img");
-          const inFirstScreen = card.offsetLeft < window.innerWidth * 0.9;
+          const box = card.getBoundingClientRect();
+          const inFirstScreen = rtl ? box.right > window.innerWidth * 0.1 : box.left < window.innerWidth * 0.9;
+          // Where a card enters and leaves the screen, mirrored for right-to-left.
+          const [edge, enter, leave] = rtl ? ["right", "left", "right"] : ["left", "right", "left"];
 
           // The frame opens along the logo's isometric diagonal as it slides into view.
           gsap.fromTo(
@@ -52,19 +55,30 @@ export function Work() {
               ease: "power2.out",
               scrollTrigger: inFirstScreen
                 ? { trigger: root.current, start: "top 85%", end: "top 10%", scrub: 0.6 }
-                : { trigger: card, containerAnimation: slide, start: "left 100%", end: "left 45%", scrub: 0.6 },
+                : {
+                    trigger: card,
+                    containerAnimation: slide,
+                    start: rtl ? "right 0%" : "left 100%",
+                    end: rtl ? "right 55%" : "left 45%",
+                    scrub: 0.6,
+                  },
             },
           );
 
           // Screenshots drift inside their frames for depth.
-          if (img)
-            gsap.fromTo(
+          gsap.fromTo(
             img,
-            { xPercent: -6 },
+            { xPercent: rtl ? 6 : -6 },
             {
-              xPercent: 6,
+              xPercent: rtl ? -6 : 6,
               ease: "none",
-              scrollTrigger: { trigger: card, containerAnimation: slide, start: "left right", end: "right left", scrub: true },
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: slide,
+                start: `${edge} ${enter}`,
+                end: `${leave === "left" ? "right" : "left"} ${leave}`,
+                scrub: true,
+              },
             },
           );
         });
@@ -81,7 +95,7 @@ export function Work() {
         return () => gsap.set(".work-viewport", { clearProps: "overflowX" });
       });
     },
-    { scope: root },
+    { scope: root, dependencies: [rtl] },
   );
 
   return (
@@ -90,12 +104,9 @@ export function Work() {
         <div ref={track} className="work-track">
           <div className="work-intro">
             <h2 id="work-title" className="section-title">
-              Things we&apos;ve built
+              {t.work.title}
             </h2>
-            <p className="section-lead">Real projects for real businesses. Each one started as a message.</p>
-            <div className="work-progress" aria-hidden="true">
-              <span className="work-progress-fill" />
-            </div>
+            <p className="section-lead">{t.work.lead}</p>
           </div>
 
           {projects.map((p, i) => (
@@ -114,30 +125,19 @@ export function Work() {
                 <h3 className="project-name">{p.name}</h3>
                 <p className="project-kind">{p.kind}</p>
                 <p className="project-desc">{p.text}</p>
-                <ul className="tags" aria-label="What we made">
-                  {p.tags.map((t) => (
-                    <li key={t}>{t}</li>
+                <ul className="tags" aria-label={t.work.madeLabel}>
+                  {p.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
                   ))}
                 </ul>
                 {p.url && (
                   <a className="text-link" href={p.url} target="_blank" rel="noopener noreferrer">
-                    Visit {p.url.replace("https://", "")}
+                    {t.work.visit} {p.url.replace("https://", "")}
                   </a>
                 )}
               </div>
             </article>
           ))}
-
-          <div className="project project-next">
-            <div className="project-frame project-frame-empty">
-              <p className="next-title">Your project could be next.</p>
-              <p className="next-text">Tell us what you have in mind. A sketch or a voice note is enough to start.</p>
-              <a className="btn btn-primary" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                <WhatsAppIcon className="btn-icon" />
-                <RollText>Start on WhatsApp</RollText>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </section>
