@@ -1,69 +1,125 @@
-import Image from "next/image";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { Services } from "@/components/Services";
+import { Work } from "@/components/Work";
+import { Faq } from "@/components/Faq";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { AnimatedMark } from "@/components/AnimatedMark";
+import { Wordmark } from "@/components/Mark";
+import { RollText } from "@/components/RollText";
+import { Cube, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
+import { EMAIL, LOCATION, WHATSAPP_DISPLAY, reasons, services, whatsappLink } from "@/lib/site";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Header />
+      <main id="main">
+        <span id="top" />
+        <Hero />
+        <Services />
+        <Work />
+
+        <section className="reasons" aria-labelledby="reasons-title">
+          <div className="wrap reasons-inner">
+            <div className="section-head">
+              <h2 id="reasons-title" className="section-title">
+                Why people work with us
+              </h2>
+              <p className="section-lead">
+                We&apos;re a young team, and that works in your favor: you get our full attention, from the first message
+                to long after launch.
+              </p>
+            </div>
+            <ul className="reasons-list">
+              {reasons.map((r) => (
+                <li key={r.title}>
+                  <Cube className="reason-cube" />
+                  <h3>{r.title}</h3>
+                  <p>{r.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <Faq />
+
+        <section id="contact" className="contact" aria-labelledby="contact-title">
+          <div className="wrap contact-inner">
+            <div className="contact-copy">
+              <h2 id="contact-title" className="contact-title">
+                Have an idea? Send it to us.
+              </h2>
+              <p className="contact-lead">
+                One message is all it takes to start. Tell us what you want to build and we&apos;ll take it from there.
+              </p>
+              <a className="btn btn-primary btn-large" href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                <WhatsAppIcon className="btn-icon" />
+                <RollText>Message us on WhatsApp</RollText>
+              </a>
+              <ul className="contact-list">
+                <li>
+                  <WhatsAppIcon className="contact-icon" />
+                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" dir="ltr">
+                    {WHATSAPP_DISPLAY}
+                  </a>
+                </li>
+                <li>
+                  <MailIcon className="contact-icon" />
+                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                </li>
+                <li>
+                  <PinIcon className="contact-icon" />
+                  <span>{LOCATION}</span>
+                </li>
+              </ul>
+            </div>
+            <div className="contact-visual" aria-hidden="true">
+              <AnimatedMark className="contact-mark" mode="scroll" />
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <footer className="site-footer">
+        <div className="wrap footer-inner">
+          <div className="footer-brand">
+            <Wordmark />
+            <p>Websites, apps and software, built in Fayoum for people across Egypt.</p>
+          </div>
+          <div className="footer-col">
+            <h2>What we build</h2>
+            <ul>
+              {services.map((s) => (
+                <li key={s.id}>{s.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="footer-col">
+            <h2>Contact</h2>
+            <ul>
+              <li>
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" dir="ltr">
+                  {WHATSAPP_DISPLAY}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+              </li>
+              <li>{LOCATION}</li>
+            </ul>
+          </div>
+        </div>
+        <div className="wrap footer-base">
+          <p>© 2026 BitTech. All rights reserved.</p>
+        </div>
+      </footer>
+
+      <FloatingWhatsApp />
+    </>
   );
 }
